@@ -505,6 +505,9 @@ const GEMINI_API_KEYS = [
 ].filter((k): k is string => Boolean(k));
 const UNIQUE_GEMINI_KEYS = Array.from(new Set(GEMINI_API_KEYS));
 
+// Keep provider diagnosis actionable without ever logging credentials.
+console.info(`[AI_CASCADE] provider pools initialized: groq=${UNIQUE_GROQ_KEYS.length}, gemini=${UNIQUE_GEMINI_KEYS.length}, model=${GROQ_MODEL}`);
+
 let currentGroqKeyIndex = 0;
 let currentGeminiKeyIndex = 0;
 
