@@ -22,7 +22,7 @@ export function memoryMode(conversationId: string): "off" | "shadow" | "live" {
   const mode = process.env.AI_MEMORY_MODE;
   if (mode === "shadow") return "shadow";
   const allowed = (process.env.AI_MEMORY_LIVE_CONVERSATIONS || "").split(",").map(s => s.trim());
-  return mode === "live" && allowed.includes(conversationId) ? "live" : "off";
+  return mode === "live" && (allowed.includes("*") || allowed.includes(conversationId)) ? "live" : "off";
 }
 export function normalizeMemoryMessages(raw: Array<Record<string, unknown>>): MemoryMessage[] {
   return raw.filter(m => m.lane !== "internal" && !m.deletedAt).flatMap((m, index) => {
