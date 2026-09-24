@@ -883,7 +883,8 @@ async function fetchGroqPool(messages: Array<{ role: string; content: string }>,
       });
 
       if (response.status === 429 || response.status === 401 || response.status >= 500) {
-        console.warn(`[AI_CASCADE] Groq key ${key.slice(0, 10)}... status ${response.status}. Retrying next key...`);
+        const errorBody = await response.clone().text().catch(() => "");
+        console.warn(`[AI_CASCADE] Groq key ${key.slice(0, 10)}... status ${response.status}. ${errorBody.slice(0, 300)} Retrying next key...`);
         if (response.status === 429) {
           try {
             const fallbackRes = await fetch("https://api.groq.com/openai/v1/chat/completions", {
@@ -921,7 +922,8 @@ async function fetchGroqPool(messages: Array<{ role: string; content: string }>,
       }
 
       if (!response.ok) {
-        console.warn(`[AI_CASCADE] Groq HTTP error ${response.status}. Trying next key...`);
+        const errorBody = await response.clone().text().catch(() => "");
+        console.warn(`[AI_CASCADE] Groq HTTP error ${response.status}. ${errorBody.slice(0, 300)} Trying next key...`);
         continue;
       }
 
@@ -996,7 +998,8 @@ async function fetchGeminiPool(
       );
 
       if (!response.ok) {
-        console.warn(`[AI_CASCADE] Gemini HTTP error ${response.status} on key ${key.slice(0, 8)}... Trying next key...`);
+        const errorBody = await response.clone().text().catch(() => "");
+        console.warn(`[AI_CASCADE] Gemini HTTP error ${response.status} on key ${key.slice(0, 8)}... ${errorBody.slice(0, 300)} Trying next key...`);
         continue;
       }
 
