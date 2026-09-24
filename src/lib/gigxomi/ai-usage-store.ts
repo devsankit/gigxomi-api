@@ -4,6 +4,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 
 export interface AiUsageRecord {
   at: string;
+  purpose?: "memory-summary" | "memory-retrieval";
   provider: string;
   model: string;
   inputTokens: number;
@@ -83,6 +84,10 @@ export async function getAiUsageSnapshot() {
   const latestByKey = new Map<number, AiRateLimitSnapshot>();
   for (const snapshot of rateLimits) latestByKey.set(snapshot.keySlot, snapshot);
   return {
+    memoryUsage: ["memory-summary", "memory-retrieval"].map(purpose => {
+      const records = usage.filter(item => item.purpose === purpose);
+      return { purpose, calls: records.length, inputTokens: records.reduce((n, r) => n + r.inputTokens, 0), outputTokens: records.reduce((n, r) => n + r.outputTokens, 0), totalTokens: records.reduce((n, r) => n + r.totalTokens, 0) };
+    }),
     usageCount: usage.length,
     totalTokens: usage.reduce((sum, item) => sum + Number(item.totalTokens || 0), 0),
     latestUsageAt: usage.at(-1)?.at ?? null,

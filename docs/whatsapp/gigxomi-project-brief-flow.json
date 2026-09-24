@@ -1,0 +1,70 @@
+{
+  "version": "7.3",
+  "screens": [
+    {
+      "id": "PROJECT_BRIEF",
+      "title": "Gigxomi Project Brief",
+      "terminal": true,
+      "success": true,
+      "data": {},
+      "layout": {
+        "type": "SingleColumnLayout",
+        "children": [
+          {
+            "type": "TextHeading",
+            "text": "Edit your video with Gigxomi"
+          },
+          {
+            "type": "TextBody",
+            "text": "Fill in this quick brief. Our team will review your requirements before assigning the right editor."
+          },
+          {
+            "type": "Form",
+            "name": "project_brief_form",
+            "children": [
+              {
+                "type": "TextInput",
+                "name": "project_name",
+                "label": "Project name",
+                "required": true
+              },
+              {
+                "type": "TextInput",
+                "name": "google_drive_link",
+                "label": "Google Drive link",
+                "helper-text": "Share a viewable link containing the footage and project files.",
+                "required": true
+              },
+              {
+                "type": "TextInput",
+                "name": "reference_video_link",
+                "label": "Reference video link",
+                "helper-text": "Optional: share an example of the editing style you want."
+              },
+              {
+                "type": "TextArea",
+                "name": "editing_notes",
+                "label": "Editing notes",
+                "helper-text": "Mention style, duration, format, captions, music, and deadline.",
+                "required": true
+              },
+              {
+                "type": "Footer",
+                "label": "Submit project brief",
+                "on-click-action": {
+                  "name": "complete",
+                  "payload": {
+                    "project_name": "${form.project_name}",
+                    "google_drive_link": "${form.google_drive_link}",
+                    "reference_video_link": "${form.reference_video_link}",
+                    "editing_notes": "${form.editing_notes}"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

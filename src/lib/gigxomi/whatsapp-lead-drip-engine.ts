@@ -1,4 +1,7 @@
 import "server-only";
+import { prisma } from "@/lib/prisma";
+import { getLeadAgencyRegistrationStateByPhone } from "./auto-lead-qualifier";
+import { digest } from "./conversation-memory-core";
 
 import path from "node:path";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
@@ -326,6 +329,18 @@ async function evaluateAndDispatchLeadDripsOnce(): Promise<{
     }
 
     try {
+      // Read authoritative DB immediately before dispatch, bypassing the UI cache.
+      const row = await prisma.appConversation.findUnique({ where: { id: conversation.id }, select: { payload: true } });
+      const current = row?.payload as unknown as { messages: ConversationMessage[]; aiAutoReplyDisabled?: boolean; leadStatusId: string; customerPhone: string } | undefined;
+      const signature = (items: ConversationMessage[]) => digest(items.map(m => [isCustomerMessage(m), messageBody(m), m.createdAt]));
+      const freshDecision = current && getContextAwareFollowUpDecision({ messages: current.messages, leadStatusId: current.leadStatusId });
+      if (!current || current.aiAutoReplyDisabled || terminalStatus.includes(current.leadStatusId) || !freshDecision || freshDecision.purpose !== decision.purpose || signature(current.messages) !== signature(messages)) {
+        summary.skipped++; continue;
+      }
+      const registered = await getLeadAgencyRegistrationStateByPhone(current.customerPhone);
+      if (registered === null || registered === undefined || (decision.category === "REGISTERED_TRAINING_PENDING" ? !registered : registered)) { summary.skipped++; continue; }
+      const lastCheck = await prisma.appConversation.findUnique({ where: { id: conversation.id }, select: { payload: true } });
+      if (digest(lastCheck?.payload) !== digest(row?.payload)) { summary.skipped++; continue; }
       await deliverConversationMessageFromFile(conversation.id, { role: "admin", body: content, lane: "customer" });
       const sentAt = new Date().toISOString();
       state.audienceCategory = decision.category;
