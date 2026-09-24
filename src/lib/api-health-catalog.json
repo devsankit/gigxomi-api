@@ -1,0 +1,4659 @@
+{
+  "generatedAt": "2026-09-16T12:35:57.614Z",
+  "summary": {
+    "total": 341,
+    "activeUI": 202,
+    "activeMobile": 85,
+    "externalWebhooks": 46,
+    "cronJobs": 2,
+    "sseStreams": 4,
+    "orphanedCandidates": 56
+  },
+  "routes": [
+    {
+      "route": "/api/accounting/requests",
+      "category": "accounting",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/accounting/requests/route.ts",
+      "uiConsumers": [
+        "src/components/accounting/accounting-section.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useMoney.ts"
+      ]
+    },
+    {
+      "route": "/api/admin/channel-connections",
+      "category": "admin",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/admin/channel-connections/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-dummy-controls.tsx",
+        "src/components/admin/admin-instagram-inbox-setup.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/admin/channel-connections/[id]",
+      "category": "admin",
+      "methods": [
+        "GET",
+        "PATCH",
+        "DELETE"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/admin/channel-connections/[id]/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-dummy-controls.tsx",
+        "src/components/admin/admin-instagram-inbox-setup.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/admin/channels/setup",
+      "category": "admin",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/admin/channels/setup/route.ts",
+      "uiConsumers": [
+        "src/components/public/auth/signup-flow.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/admin/contacts",
+      "category": "admin",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/admin/contacts/route.ts",
+      "uiConsumers": [
+        "src/components/crm/crm-dummy-controls.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useTeam.ts"
+      ]
+    },
+    {
+      "route": "/api/admin/customer-privacy",
+      "category": "admin",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/admin/customer-privacy/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-settings-workspace.tsx",
+        "src/components/crm/crm-dummy-controls.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/admin/dashboard",
+      "category": "admin",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/admin/dashboard/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-live-dashboard.tsx",
+        "src/components/admin/admin-section-content.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useRoleDashboard.ts"
+      ]
+    },
+    {
+      "route": "/api/admin/instagram",
+      "category": "admin",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/admin/instagram/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-instagram-inbox-setup.tsx",
+        "src/components/admin/admin-integrations-overview.tsx",
+        "src/components/admin/admin-shell.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/admin/instagram/sync",
+      "category": "admin",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/admin/instagram/sync/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-instagram-inbox-setup.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/admin/managers",
+      "category": "admin",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/admin/managers/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-staff-hub.tsx",
+        "src/components/crm/crm-dummy-controls.tsx",
+        "src/components/manager/manager-shell.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useTeam.ts"
+      ]
+    },
+    {
+      "route": "/api/admin/managers/[id]/permissions",
+      "category": "admin",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/admin/managers/[id]/permissions/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-staff-hub.tsx",
+        "src/components/crm/crm-dummy-controls.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/admin/managers/[id]",
+      "category": "admin",
+      "methods": [
+        "PATCH",
+        "DELETE"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/admin/managers/[id]/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-staff-hub.tsx",
+        "src/components/crm/crm-dummy-controls.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/admin/onboarding",
+      "category": "admin",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/admin/onboarding/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-agency-listing-editor.tsx",
+        "src/components/admin/admin-onboarding-gate.tsx",
+        "src/components/admin/admin-settings-workspace.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/admin/payout-requests",
+      "category": "admin",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/admin/payout-requests/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-payout-accounting-client.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/admin/service-reviews",
+      "category": "admin",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/admin/service-reviews/route.ts",
+      "uiConsumers": [
+        "src/components/admin/service-review-workspace.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/admin/service-reviews/[id]/decision",
+      "category": "admin",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/admin/service-reviews/[id]/decision/route.ts",
+      "uiConsumers": [
+        "src/components/admin/service-review-workspace.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/admin/staff/editors/[id]/permissions",
+      "category": "admin",
+      "methods": [
+        "PATCH"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/admin/staff/editors/[id]/permissions/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-staff-hub.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/admin/staff/editors/[id]",
+      "category": "admin",
+      "methods": [
+        "GET",
+        "PATCH",
+        "DELETE"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/admin/staff/editors/[id]/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-staff-hub.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/admin/staff/invite",
+      "category": "admin",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/admin/staff/invite/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-staff-hub.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/admin/staff/requests/[id]",
+      "category": "admin",
+      "methods": [
+        "DELETE"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/admin/staff/requests/[id]/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-staff-hub.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/admin/staff",
+      "category": "admin",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/admin/staff/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-staff-hub.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/admin/upi",
+      "category": "admin",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/admin/upi/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-settings-workspace.tsx",
+        "src/components/crm/crm-dummy-controls.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useIntegrations.ts"
+      ]
+    },
+    {
+      "route": "/api/admin/whatsapp/finalize-signup",
+      "category": "admin",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/admin/whatsapp/finalize-signup/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-dummy-controls.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/admin/whatsapp/refresh-token",
+      "category": "admin",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/admin/whatsapp/refresh-token/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-dummy-controls.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/admin/whatsapp/register-phone",
+      "category": "admin",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/admin/whatsapp/register-phone/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-dummy-controls.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/admin/whatsapp",
+      "category": "admin",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/admin/whatsapp/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-dummy-controls.tsx",
+        "src/components/admin/admin-integrations-overview.tsx",
+        "src/components/admin/admin-shell.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useIntegrations.ts"
+      ]
+    },
+    {
+      "route": "/api/admin/whatsapp/subscribe-webhook",
+      "category": "admin",
+      "methods": [
+        "POST"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/admin/whatsapp/subscribe-webhook/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-dummy-controls.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/admin/whatsapp-flows",
+      "category": "admin",
+      "methods": [
+        "GET",
+        "POST",
+        "PATCH",
+        "DELETE"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/admin/whatsapp-flows/route.ts",
+      "uiConsumers": [
+        "src/app/admin/chatbot/page.tsx",
+        "src/app/admin/chatbot/[flowId]/builder/page.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/admin/youtube",
+      "category": "admin",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/admin/youtube/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-dummy-controls.tsx",
+        "src/components/admin/admin-youtube-controls.tsx",
+        "src/components/delivery/portfolio-draft-workspace.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useIntegrations.ts"
+      ]
+    },
+    {
+      "route": "/api/assignments",
+      "category": "assignments",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/assignments/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useAssignments.ts"
+      ]
+    },
+    {
+      "route": "/api/assignments/[assignmentId]/delivery",
+      "category": "assignments",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/assignments/[assignmentId]/delivery/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useAssignments.ts"
+      ]
+    },
+    {
+      "route": "/api/assignments/[assignmentId]/payment-request",
+      "category": "assignments",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/assignments/[assignmentId]/payment-request/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useAssignments.ts"
+      ]
+    },
+    {
+      "route": "/api/assignments/[assignmentId]/performance-context",
+      "category": "assignments",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/assignments/[assignmentId]/performance-context/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useAssignments.ts"
+      ]
+    },
+    {
+      "route": "/api/assignments/[assignmentId]/progress",
+      "category": "assignments",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/assignments/[assignmentId]/progress/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useAssignments.ts"
+      ]
+    },
+    {
+      "route": "/api/assignments/[assignmentId]/rating",
+      "category": "assignments",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/assignments/[assignmentId]/rating/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useAssignments.ts"
+      ]
+    },
+    {
+      "route": "/api/assignments/[assignmentId]/respond",
+      "category": "assignments",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/assignments/[assignmentId]/respond/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useAssignments.ts"
+      ]
+    },
+    {
+      "route": "/api/assignments/[assignmentId]",
+      "category": "assignments",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/assignments/[assignmentId]/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useAssignments.ts"
+      ]
+    },
+    {
+      "route": "/api/auth/forgot-password",
+      "category": "auth",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/auth/forgot-password/route.ts",
+      "uiConsumers": [
+        "src/app/forgot-password/page.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/auth/google/callback",
+      "category": "auth",
+      "methods": [
+        "GET"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/auth/google/callback/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/auth/google/one-tap",
+      "category": "auth",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/auth/google/one-tap/route.ts",
+      "uiConsumers": [
+        "src/components/public/google-one-tap.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/auth/google",
+      "category": "auth",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/auth/google/route.ts",
+      "uiConsumers": [
+        "src/components/public/auth/signup-flow.tsx",
+        "src/components/public/google-one-tap.tsx",
+        "src/components/public/public-auth-panel.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/auth/google/status",
+      "category": "auth",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/auth/google/status/route.ts",
+      "uiConsumers": [
+        "src/components/public/auth/signup-flow.tsx",
+        "src/components/public/public-auth-panel.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/auth/impersonation/stop",
+      "category": "auth",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/auth/impersonation/stop/route.ts",
+      "uiConsumers": [
+        "src/app/freelancer/layout.tsx",
+        "src/components/admin/admin-shell.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/auth/login/password",
+      "category": "auth",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/auth/login/password/route.ts",
+      "uiConsumers": [
+        "src/app/manager-login/page.tsx",
+        "src/app/super-admin/login/page.tsx",
+        "src/components/public/public-auth-panel.tsx",
+        "src/components/sales/sales-auth.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/auth/login/whatsapp",
+      "category": "auth",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/auth/login/whatsapp/route.ts",
+      "uiConsumers": [
+        "src/app/channel-setup/confirm/page.tsx",
+        "src/app/manager-login/page.tsx",
+        "src/components/public/public-auth-panel.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/auth/logout",
+      "category": "auth",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/auth/logout/route.ts",
+      "uiConsumers": [
+        "src/app/payment/[transactionId]/page.tsx",
+        "src/app/subscription-required/page.tsx",
+        "src/components/freelancer/freelancer-qualification-onboarding.tsx",
+        "src/components/public/marketing-site-header.tsx",
+        "src/components/ui/internal-app-shell.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/auth/request-otp",
+      "category": "auth",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/auth/request-otp/route.ts",
+      "uiConsumers": [
+        "src/app/verify-otp/page.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/auth/reset-password",
+      "category": "auth",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/auth/reset-password/route.ts",
+      "uiConsumers": [
+        "src/app/reset-password/page.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/auth/session",
+      "category": "auth",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/auth/session/route.ts",
+      "uiConsumers": [
+        "src/components/freelancer/freelancer-qualification-onboarding.tsx",
+        "src/components/freelancer/freelancer-referral-portal.tsx",
+        "src/components/freelancer/freelancer-shell.tsx",
+        "src/components/public/auth/signup-flow.tsx",
+        "src/components/public/google-one-tap.tsx",
+        "src/components/public/marketing-site-header.tsx",
+        "src/components/ui/session-expiry-redirect.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/auth/signup/email",
+      "category": "auth",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/auth/signup/email/route.ts",
+      "uiConsumers": [
+        "src/components/public/auth/signup-flow.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/auth/signup",
+      "category": "auth",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/auth/signup/route.ts",
+      "uiConsumers": [
+        "src/components/public/auth/signup-flow.tsx",
+        "src/components/public/public-auth-panel.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/auth/update-phone",
+      "category": "auth",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/auth/update-phone/route.ts",
+      "uiConsumers": [
+        "src/components/public/auth/signup-flow.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/auth/verify-otp",
+      "category": "auth",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/auth/verify-otp/route.ts",
+      "uiConsumers": [
+        "src/app/verify-otp/page.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/billing/checkout/confirm",
+      "category": "billing",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/billing/checkout/confirm/route.ts",
+      "uiConsumers": [
+        "src/components/billing/gateway-checkout-form.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/billing/invoices/[transactionId]",
+      "category": "billing",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/billing/invoices/[transactionId]/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-section-content.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/billing/jobs/process-renewals",
+      "category": "billing",
+      "methods": [
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/billing/jobs/process-renewals/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/billing/razorpay/create-order",
+      "category": "billing",
+      "methods": [
+        "POST"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/billing/razorpay/create-order/route.ts",
+      "uiConsumers": [
+        "src/components/billing/RazorpayCheckoutClient.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/billing/razorpay/verify",
+      "category": "billing",
+      "methods": [
+        "POST"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/billing/razorpay/verify/route.ts",
+      "uiConsumers": [
+        "src/components/billing/RazorpayCheckoutClient.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/billing/razorpay/webhook",
+      "category": "billing",
+      "methods": [
+        "POST"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/billing/razorpay/webhook/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/billing/subscribe",
+      "category": "billing",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/billing/subscribe/route.ts",
+      "uiConsumers": [
+        "src/components/public/pricing-funnel-client.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/conversations/events",
+      "category": "conversations",
+      "methods": [
+        "GET"
+      ],
+      "type": "SSE_STREAM",
+      "sourceFile": "src/app/api/conversations/events/route.ts",
+      "uiConsumers": [
+        "src/components/chat/chat-workspace.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/conversations/new",
+      "category": "conversations",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/conversations/new/route.ts",
+      "uiConsumers": [
+        "src/components/chat/chat-workspace.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/conversations/realtime",
+      "category": "conversations",
+      "methods": [
+        "GET"
+      ],
+      "type": "SSE_STREAM",
+      "sourceFile": "src/app/api/conversations/realtime/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/conversations",
+      "category": "conversations",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/conversations/route.ts",
+      "uiConsumers": [
+        "src/components/chat/chat-workspace.tsx",
+        "src/components/delivery/portfolio-draft-workspace.tsx",
+        "src/components/manager/manager-project-tracking-kanban.tsx",
+        "src/components/manager/manager-project-tracking-workspace.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useChats.ts",
+        "mobile-app/src/lib/pushNotifications.ts"
+      ]
+    },
+    {
+      "route": "/api/conversations/[id]/assignment/respond",
+      "category": "conversations",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/conversations/[id]/assignment/respond/route.ts",
+      "uiConsumers": [
+        "src/components/chat/chat-workspace.tsx",
+        "src/components/manager/manager-project-tracking-kanban.tsx",
+        "src/components/manager/manager-project-tracking-workspace.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useChats.ts",
+        "mobile-app/src/lib/pushNotifications.ts"
+      ]
+    },
+    {
+      "route": "/api/conversations/[id]/assignment",
+      "category": "conversations",
+      "methods": [
+        "POST",
+        "DELETE"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/conversations/[id]/assignment/route.ts",
+      "uiConsumers": [
+        "src/components/chat/chat-workspace.tsx",
+        "src/components/manager/manager-project-tracking-kanban.tsx",
+        "src/components/manager/manager-project-tracking-workspace.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useChats.ts",
+        "mobile-app/src/lib/pushNotifications.ts"
+      ]
+    },
+    {
+      "route": "/api/conversations/[id]/client-alias",
+      "category": "conversations",
+      "methods": [
+        "PATCH"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/conversations/[id]/client-alias/route.ts",
+      "uiConsumers": [
+        "src/components/chat/chat-workspace.tsx",
+        "src/components/manager/manager-project-tracking-kanban.tsx",
+        "src/components/manager/manager-project-tracking-workspace.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useChats.ts",
+        "mobile-app/src/lib/pushNotifications.ts"
+      ]
+    },
+    {
+      "route": "/api/conversations/[id]/due-date",
+      "category": "conversations",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/conversations/[id]/due-date/route.ts",
+      "uiConsumers": [
+        "src/components/chat/chat-workspace.tsx",
+        "src/components/manager/manager-project-tracking-kanban.tsx",
+        "src/components/manager/manager-project-tracking-workspace.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useChats.ts",
+        "mobile-app/src/lib/pushNotifications.ts"
+      ]
+    },
+    {
+      "route": "/api/conversations/[id]/freelancer-customer-access",
+      "category": "conversations",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/conversations/[id]/freelancer-customer-access/route.ts",
+      "uiConsumers": [
+        "src/components/chat/chat-workspace.tsx",
+        "src/components/manager/manager-project-tracking-kanban.tsx",
+        "src/components/manager/manager-project-tracking-workspace.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useChats.ts",
+        "mobile-app/src/lib/pushNotifications.ts"
+      ]
+    },
+    {
+      "route": "/api/conversations/[id]/lead-status",
+      "category": "conversations",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/conversations/[id]/lead-status/route.ts",
+      "uiConsumers": [
+        "src/components/chat/chat-workspace.tsx",
+        "src/components/manager/manager-project-tracking-kanban.tsx",
+        "src/components/manager/manager-project-tracking-workspace.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useChats.ts",
+        "mobile-app/src/lib/pushNotifications.ts"
+      ]
+    },
+    {
+      "route": "/api/conversations/[id]/lead-statuses",
+      "category": "conversations",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/conversations/[id]/lead-statuses/route.ts",
+      "uiConsumers": [
+        "src/components/chat/chat-workspace.tsx",
+        "src/components/manager/manager-project-tracking-kanban.tsx",
+        "src/components/manager/manager-project-tracking-workspace.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useChats.ts",
+        "mobile-app/src/lib/pushNotifications.ts"
+      ]
+    },
+    {
+      "route": "/api/conversations/[id]/messages",
+      "category": "conversations",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/conversations/[id]/messages/route.ts",
+      "uiConsumers": [
+        "src/components/chat/chat-workspace.tsx",
+        "src/components/manager/manager-project-tracking-kanban.tsx",
+        "src/components/manager/manager-project-tracking-workspace.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useChats.ts",
+        "mobile-app/src/lib/pushNotifications.ts"
+      ]
+    },
+    {
+      "route": "/api/conversations/[id]/notes",
+      "category": "conversations",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/conversations/[id]/notes/route.ts",
+      "uiConsumers": [
+        "src/components/chat/chat-workspace.tsx",
+        "src/components/manager/manager-project-tracking-kanban.tsx",
+        "src/components/manager/manager-project-tracking-workspace.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useChats.ts",
+        "mobile-app/src/lib/pushNotifications.ts"
+      ]
+    },
+    {
+      "route": "/api/conversations/[id]/payment-request",
+      "category": "conversations",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/conversations/[id]/payment-request/route.ts",
+      "uiConsumers": [
+        "src/components/chat/chat-workspace.tsx",
+        "src/components/manager/manager-project-tracking-kanban.tsx",
+        "src/components/manager/manager-project-tracking-workspace.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useChats.ts",
+        "mobile-app/src/lib/pushNotifications.ts"
+      ]
+    },
+    {
+      "route": "/api/conversations/[id]/private",
+      "category": "conversations",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/conversations/[id]/private/route.ts",
+      "uiConsumers": [
+        "src/components/chat/chat-workspace.tsx",
+        "src/components/manager/manager-project-tracking-kanban.tsx",
+        "src/components/manager/manager-project-tracking-workspace.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useChats.ts",
+        "mobile-app/src/lib/pushNotifications.ts"
+      ]
+    },
+    {
+      "route": "/api/conversations/[id]/project-intake/approve",
+      "category": "conversations",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/conversations/[id]/project-intake/approve/route.ts",
+      "uiConsumers": [
+        "src/components/chat/chat-workspace.tsx",
+        "src/components/manager/manager-project-tracking-kanban.tsx",
+        "src/components/manager/manager-project-tracking-workspace.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useChats.ts",
+        "mobile-app/src/lib/pushNotifications.ts"
+      ]
+    },
+    {
+      "route": "/api/conversations/[id]/read",
+      "category": "conversations",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/conversations/[id]/read/route.ts",
+      "uiConsumers": [
+        "src/components/chat/chat-workspace.tsx",
+        "src/components/manager/manager-project-tracking-kanban.tsx",
+        "src/components/manager/manager-project-tracking-workspace.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useChats.ts",
+        "mobile-app/src/lib/pushNotifications.ts"
+      ]
+    },
+    {
+      "route": "/api/conversations/[id]/review-flow",
+      "category": "conversations",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/conversations/[id]/review-flow/route.ts",
+      "uiConsumers": [
+        "src/components/chat/chat-workspace.tsx",
+        "src/components/manager/manager-project-tracking-kanban.tsx",
+        "src/components/manager/manager-project-tracking-workspace.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useChats.ts",
+        "mobile-app/src/lib/pushNotifications.ts"
+      ]
+    },
+    {
+      "route": "/api/conversations/[id]/sync-instagram-profile",
+      "category": "conversations",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/conversations/[id]/sync-instagram-profile/route.ts",
+      "uiConsumers": [
+        "src/components/chat/chat-workspace.tsx",
+        "src/components/manager/manager-project-tracking-kanban.tsx",
+        "src/components/manager/manager-project-tracking-workspace.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useChats.ts",
+        "mobile-app/src/lib/pushNotifications.ts"
+      ]
+    },
+    {
+      "route": "/api/conversations/[id]/typing",
+      "category": "conversations",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/conversations/[id]/typing/route.ts",
+      "uiConsumers": [
+        "src/components/chat/chat-workspace.tsx",
+        "src/components/manager/manager-project-tracking-kanban.tsx",
+        "src/components/manager/manager-project-tracking-workspace.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useChats.ts",
+        "mobile-app/src/lib/pushNotifications.ts"
+      ]
+    },
+    {
+      "route": "/api/conversations/[id]/whatsapp-profile-picture",
+      "category": "conversations",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/conversations/[id]/whatsapp-profile-picture/route.ts",
+      "uiConsumers": [
+        "src/components/chat/chat-workspace.tsx",
+        "src/components/manager/manager-project-tracking-kanban.tsx",
+        "src/components/manager/manager-project-tracking-workspace.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useChats.ts",
+        "mobile-app/src/lib/pushNotifications.ts"
+      ]
+    },
+    {
+      "route": "/api/cron/connected-drip-campaigns",
+      "category": "cron",
+      "methods": [
+        "GET"
+      ],
+      "type": "CRON_BACKGROUND",
+      "sourceFile": "src/app/api/cron/connected-drip-campaigns/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/cron/freelancer-trust-campaign",
+      "category": "cron",
+      "methods": [
+        "GET"
+      ],
+      "type": "CRON_BACKGROUND",
+      "sourceFile": "src/app/api/cron/freelancer-trust-campaign/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/cron/meta-conversions",
+      "category": "cron",
+      "methods": [
+        "POST"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/cron/meta-conversions/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/delivery/assets",
+      "category": "delivery",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/delivery/assets/route.ts",
+      "uiConsumers": [
+        "src/components/delivery/delivery-review-workspace.tsx",
+        "src/components/delivery/portfolio-draft-workspace.tsx",
+        "src/lib/gigxomi/delivery-portfolio-store.ts"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useOrders.ts"
+      ]
+    },
+    {
+      "route": "/api/delivery/assets/[id]/approval",
+      "category": "delivery",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/delivery/assets/[id]/approval/route.ts",
+      "uiConsumers": [
+        "src/components/delivery/delivery-review-workspace.tsx",
+        "src/lib/gigxomi/delivery-portfolio-store.ts"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/delivery/assets/[id]/file",
+      "category": "delivery",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/delivery/assets/[id]/file/route.ts",
+      "uiConsumers": [
+        "src/components/delivery/delivery-review-workspace.tsx",
+        "src/lib/gigxomi/delivery-portfolio-store.ts"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/delivery/assets/[id]",
+      "category": "delivery",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/delivery/assets/[id]/route.ts",
+      "uiConsumers": [
+        "src/components/delivery/delivery-review-workspace.tsx",
+        "src/lib/gigxomi/delivery-portfolio-store.ts"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/delivery/assets/[id]/share-link",
+      "category": "delivery",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/delivery/assets/[id]/share-link/route.ts",
+      "uiConsumers": [
+        "src/components/delivery/delivery-review-workspace.tsx",
+        "src/lib/gigxomi/delivery-portfolio-store.ts"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/delivery/link",
+      "category": "delivery",
+      "methods": [
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/delivery/link/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/delivery-submissions/[submissionId]/review",
+      "category": "delivery-submissions",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/delivery-submissions/[submissionId]/review/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useAssignments.ts"
+      ]
+    },
+    {
+      "route": "/api/demo-requests",
+      "category": "demo-requests",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/demo-requests/route.ts",
+      "uiConsumers": [
+        "src/components/public/get-demo-section.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/freelancer/availability",
+      "category": "freelancer",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/freelancer/availability/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/freelancer/dashboard",
+      "category": "freelancer",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/freelancer/dashboard/route.ts",
+      "uiConsumers": [
+        "src/components/freelancer/freelancer-live-dashboard.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useRoleDashboard.ts"
+      ]
+    },
+    {
+      "route": "/api/freelancer/onboarding/assessment",
+      "category": "freelancer",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/freelancer/onboarding/assessment/route.ts",
+      "uiConsumers": [
+        "src/components/freelancer/freelancer-qualification-onboarding.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/freelancer/onboarding/avatar",
+      "category": "freelancer",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/freelancer/onboarding/avatar/route.ts",
+      "uiConsumers": [
+        "src/components/freelancer/freelancer-qualification-onboarding.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/freelancer/onboarding/identity/authorize",
+      "category": "freelancer",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/freelancer/onboarding/identity/authorize/route.ts",
+      "uiConsumers": [
+        "src/components/freelancer/freelancer-qualification-onboarding.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/freelancer/onboarding/identity/callback",
+      "category": "freelancer",
+      "methods": [
+        "GET"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/freelancer/onboarding/identity/callback/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/freelancer/onboarding/identity/revoke",
+      "category": "freelancer",
+      "methods": [
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/freelancer/onboarding/identity/revoke/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/freelancer/onboarding/identity/skip",
+      "category": "freelancer",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/freelancer/onboarding/identity/skip/route.ts",
+      "uiConsumers": [
+        "src/components/freelancer/freelancer-qualification-onboarding.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/freelancer/onboarding/portfolio-upload",
+      "category": "freelancer",
+      "methods": [
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/freelancer/onboarding/portfolio-upload/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/freelancer/onboarding/profile",
+      "category": "freelancer",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/freelancer/onboarding/profile/route.ts",
+      "uiConsumers": [
+        "src/components/freelancer/freelancer-qualification-onboarding.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/freelancer/onboarding",
+      "category": "freelancer",
+      "methods": [
+        "GET",
+        "POST",
+        "PATCH"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/freelancer/onboarding/route.ts",
+      "uiConsumers": [
+        "src/components/freelancer/freelancer-live-dashboard.tsx",
+        "src/components/freelancer/freelancer-onboarding-gate.tsx",
+        "src/components/freelancer/freelancer-qualification-onboarding.tsx",
+        "src/components/freelancer/freelancer-shell.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/freelancer/onboarding/service",
+      "category": "freelancer",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/freelancer/onboarding/service/route.ts",
+      "uiConsumers": [
+        "src/components/freelancer/freelancer-qualification-onboarding.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/freelancer/payment-details",
+      "category": "freelancer",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/freelancer/payment-details/route.ts",
+      "uiConsumers": [
+        "src/components/chat/chat-workspace.tsx",
+        "src/components/freelancer/freelancer-section-content.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useMoney.ts"
+      ]
+    },
+    {
+      "route": "/api/freelancer/payout-requests",
+      "category": "freelancer",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/freelancer/payout-requests/route.ts",
+      "uiConsumers": [
+        "src/components/freelancer/freelancer-section-content.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useMoney.ts"
+      ]
+    },
+    {
+      "route": "/api/freelancer/profile",
+      "category": "freelancer",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/freelancer/profile/route.ts",
+      "uiConsumers": [
+        "src/components/freelancer/freelancer-section-content.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useUserProfile.ts"
+      ]
+    },
+    {
+      "route": "/api/freelancer/referrals",
+      "category": "freelancer",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/freelancer/referrals/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/freelancer/service-suggestions",
+      "category": "freelancer",
+      "methods": [
+        "GET"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/freelancer/service-suggestions/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/freelancer/services",
+      "category": "freelancer",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/freelancer/services/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-dummy-controls.tsx",
+        "src/components/freelancer/freelancer-section-content.tsx",
+        "src/components/freelancer/freelancer-service-lists.tsx",
+        "src/components/freelancer/freelancer-service-management.tsx",
+        "src/components/freelancer/publishing-assistant.tsx",
+        "src/components/manager/manager-dummy-controls.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useServices.ts"
+      ]
+    },
+    {
+      "route": "/api/freelancer/services/[id]/media/design",
+      "category": "freelancer",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/freelancer/services/[id]/media/design/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-dummy-controls.tsx",
+        "src/components/freelancer/freelancer-service-lists.tsx",
+        "src/components/freelancer/freelancer-service-management.tsx",
+        "src/components/freelancer/publishing-assistant.tsx",
+        "src/components/manager/manager-dummy-controls.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useServices.ts"
+      ]
+    },
+    {
+      "route": "/api/freelancer/services/[id]/media/video",
+      "category": "freelancer",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/freelancer/services/[id]/media/video/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-dummy-controls.tsx",
+        "src/components/freelancer/freelancer-service-lists.tsx",
+        "src/components/freelancer/freelancer-service-management.tsx",
+        "src/components/freelancer/publishing-assistant.tsx",
+        "src/components/manager/manager-dummy-controls.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useServices.ts"
+      ]
+    },
+    {
+      "route": "/api/freelancer/services/[id]/review",
+      "category": "freelancer",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/freelancer/services/[id]/review/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-dummy-controls.tsx",
+        "src/components/freelancer/freelancer-service-lists.tsx",
+        "src/components/freelancer/freelancer-service-management.tsx",
+        "src/components/freelancer/publishing-assistant.tsx",
+        "src/components/manager/manager-dummy-controls.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useServices.ts"
+      ]
+    },
+    {
+      "route": "/api/freelancer/services/[id]",
+      "category": "freelancer",
+      "methods": [
+        "GET",
+        "PATCH"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/freelancer/services/[id]/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-dummy-controls.tsx",
+        "src/components/freelancer/freelancer-service-lists.tsx",
+        "src/components/freelancer/freelancer-service-management.tsx",
+        "src/components/freelancer/publishing-assistant.tsx",
+        "src/components/manager/manager-dummy-controls.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useServices.ts"
+      ]
+    },
+    {
+      "route": "/api/freelancer/services/[id]/seo-suggest",
+      "category": "freelancer",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/freelancer/services/[id]/seo-suggest/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-dummy-controls.tsx",
+        "src/components/freelancer/freelancer-service-lists.tsx",
+        "src/components/freelancer/freelancer-service-management.tsx",
+        "src/components/freelancer/publishing-assistant.tsx",
+        "src/components/manager/manager-dummy-controls.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useServices.ts"
+      ]
+    },
+    {
+      "route": "/api/freelancer/services/[id]/submit",
+      "category": "freelancer",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/freelancer/services/[id]/submit/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-dummy-controls.tsx",
+        "src/components/freelancer/freelancer-service-lists.tsx",
+        "src/components/freelancer/freelancer-service-management.tsx",
+        "src/components/freelancer/publishing-assistant.tsx",
+        "src/components/manager/manager-dummy-controls.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useServices.ts"
+      ]
+    },
+    {
+      "route": "/api/freelancer/team-requests",
+      "category": "freelancer",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/freelancer/team-requests/route.ts",
+      "uiConsumers": [
+        "src/components/freelancer/freelancer-section-content.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useTeam.ts"
+      ]
+    },
+    {
+      "route": "/api/freelancer/trust/disputes",
+      "category": "freelancer",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/freelancer/trust/disputes/route.ts",
+      "uiConsumers": [
+        "src/components/freelancer/freelancer-live-dashboard.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/freelancer/trust",
+      "category": "freelancer",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/freelancer/trust/route.ts",
+      "uiConsumers": [
+        "src/components/freelancer/freelancer-live-dashboard.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/freelancer/verification",
+      "category": "freelancer",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/freelancer/verification/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/freelancer/wallet",
+      "category": "freelancer",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/freelancer/wallet/route.ts",
+      "uiConsumers": [
+        "src/components/freelancer/freelancer-referral-portal.tsx",
+        "src/components/freelancer/freelancer-section-content.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useMoney.ts"
+      ]
+    },
+    {
+      "route": "/api/gapp/webinar/payment/return",
+      "category": "gapp",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/gapp/webinar/payment/return/route.ts",
+      "uiConsumers": [
+        "src/lib/gigxomi/gapp-webinar-store.ts"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/gapp/webinar/payment/webhook",
+      "category": "gapp",
+      "methods": [
+        "POST"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/gapp/webinar/payment/webhook/route.ts",
+      "uiConsumers": [
+        "src/lib/gigxomi/gapp-webinar-store.ts"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/gapp/webinar/register",
+      "category": "gapp",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/gapp/webinar/register/route.ts",
+      "uiConsumers": [
+        "src/components/public/gapp-webinar-landing.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/gapp/webinar",
+      "category": "gapp",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/gapp/webinar/route.ts",
+      "uiConsumers": [
+        "src/components/public/gapp-webinar-landing.tsx",
+        "src/lib/gigxomi/gapp-webinar-store.ts"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/gapp/webinar/thumbnail/[webinarId]",
+      "category": "gapp",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/gapp/webinar/thumbnail/[webinarId]/route.ts",
+      "uiConsumers": [
+        "src/lib/gigxomi/gapp-webinar-store.ts"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/health",
+      "category": "health",
+      "methods": [
+        "GET",
+        "HEAD"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/health/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/knowledge-base/feedback",
+      "category": "knowledge-base",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/knowledge-base/feedback/route.ts",
+      "uiConsumers": [
+        "src/components/knowledge-base/knowledge-base-article-view.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/knowledge-base/search",
+      "category": "knowledge-base",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/knowledge-base/search/route.ts",
+      "uiConsumers": [
+        "src/components/knowledge-base/knowledge-base-home.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/lead-statuses",
+      "category": "lead-statuses",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/lead-statuses/route.ts",
+      "uiConsumers": [
+        "src/components/manager/manager-project-tracking-kanban.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/manager/assignments",
+      "category": "manager",
+      "methods": [
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/manager/assignments/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/manager/customer-privacy",
+      "category": "manager",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/manager/customer-privacy/route.ts",
+      "uiConsumers": [
+        "src/components/crm/crm-dummy-controls.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/manager/dashboard",
+      "category": "manager",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/manager/dashboard/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useRoleDashboard.ts"
+      ]
+    },
+    {
+      "route": "/api/manager/inbox",
+      "category": "manager",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/manager/inbox/route.ts",
+      "uiConsumers": [
+        "src/components/manager/manager-project-tracking-workspace.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/manager/lead-statuses",
+      "category": "manager",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/manager/lead-statuses/route.ts",
+      "uiConsumers": [
+        "src/components/manager/manager-project-tracking-workspace.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/manager/verifications",
+      "category": "manager",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/manager/verifications/route.ts",
+      "uiConsumers": [
+        "src/components/manager/manager-section-content.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/match",
+      "category": "match",
+      "methods": [
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/match/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/meta/conversions",
+      "category": "meta",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/meta/conversions/route.ts",
+      "uiConsumers": [
+        "src/components/public/meta-measurement.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/meta/instagram/data-deletion",
+      "category": "meta",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/meta/instagram/data-deletion/route.ts",
+      "uiConsumers": [
+        "src/lib/meta/instagram-routes.ts"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/meta/instagram/data-deletion/status",
+      "category": "meta",
+      "methods": [
+        "GET"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/meta/instagram/data-deletion/status/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/meta/instagram/deauthorize",
+      "category": "meta",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/meta/instagram/deauthorize/route.ts",
+      "uiConsumers": [
+        "src/lib/meta/instagram-routes.ts"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/meta/instagram/oauth/callback",
+      "category": "meta",
+      "methods": [
+        "GET"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/meta/instagram/oauth/callback/route.ts",
+      "uiConsumers": [
+        "src/lib/meta/instagram-routes.ts"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/meta/instagram/oauth/connect",
+      "category": "meta",
+      "methods": [
+        "GET"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/meta/instagram/oauth/connect/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-instagram-inbox-setup.tsx",
+        "src/components/super-admin/super-admin-instagram-plugin-card.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/meta/instagram/webhook",
+      "category": "meta",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/meta/instagram/webhook/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-instagram-inbox-setup.tsx",
+        "src/lib/meta/instagram-routes.ts"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/meta/whatsapp/media/[mediaId]",
+      "category": "meta",
+      "methods": [
+        "GET"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/meta/whatsapp/media/[mediaId]/route.ts",
+      "uiConsumers": [
+        "src/lib/gigxomi/dummy-platform-store.ts"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/meta/whatsapp/messages",
+      "category": "meta",
+      "methods": [
+        "POST"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/meta/whatsapp/messages/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-dummy-controls.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/meta/whatsapp/webhook",
+      "category": "meta",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/meta/whatsapp/webhook/route.ts",
+      "uiConsumers": [
+        "src/lib/gigxomi/dummy-platform-store.ts"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/mobile/active-view",
+      "category": "mobile",
+      "methods": [
+        "POST",
+        "DELETE"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/mobile/active-view/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/lib/activeView.ts"
+      ]
+    },
+    {
+      "route": "/api/mobile/auth/check-status",
+      "category": "mobile",
+      "methods": [
+        "GET"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/mobile/auth/check-status/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/mobile/auth/login",
+      "category": "mobile",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/mobile/auth/login/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useAuth.ts"
+      ]
+    },
+    {
+      "route": "/api/mobile/auth/otp-channel",
+      "category": "mobile",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/mobile/auth/otp-channel/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useAuth.ts"
+      ]
+    },
+    {
+      "route": "/api/mobile/auth/request-otp",
+      "category": "mobile",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/mobile/auth/request-otp/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useAuth.ts"
+      ]
+    },
+    {
+      "route": "/api/mobile/auth/signup",
+      "category": "mobile",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/mobile/auth/signup/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useAuth.ts"
+      ]
+    },
+    {
+      "route": "/api/mobile/auth/verify-otp",
+      "category": "mobile",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/mobile/auth/verify-otp/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useAuth.ts"
+      ]
+    },
+    {
+      "route": "/api/mobile/auth/verify-signup-otp",
+      "category": "mobile",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/mobile/auth/verify-signup-otp/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useAuth.ts"
+      ]
+    },
+    {
+      "route": "/api/mobile/billing/subscribe",
+      "category": "mobile",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/mobile/billing/subscribe/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/usePackages.ts"
+      ]
+    },
+    {
+      "route": "/api/mobile/channel-setup/continue",
+      "category": "mobile",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/mobile/channel-setup/continue/route.ts",
+      "uiConsumers": [
+        "src/app/channel-setup/confirm/page.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/mobile/config",
+      "category": "mobile",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/mobile/config/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useMobileConfig.ts"
+      ]
+    },
+    {
+      "route": "/api/mobile/freelancer/projects",
+      "category": "mobile",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/mobile/freelancer/projects/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useProjects.ts"
+      ]
+    },
+    {
+      "route": "/api/mobile/freelancer/referrals",
+      "category": "mobile",
+      "methods": [
+        "CUSTOM/DYNAMIC"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/mobile/freelancer/referrals/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/mobile/logs",
+      "category": "mobile",
+      "methods": [
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/mobile/logs/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/mobile/packages",
+      "category": "mobile",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/mobile/packages/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/usePackages.ts"
+      ]
+    },
+    {
+      "route": "/api/mobile/push-config",
+      "category": "mobile",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/mobile/push-config/route.ts",
+      "uiConsumers": [
+        "src/lib/web-push/firebase-web.ts"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useIntegrations.ts"
+      ]
+    },
+    {
+      "route": "/api/mobile/push-debug",
+      "category": "mobile",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/mobile/push-debug/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useIntegrations.ts"
+      ]
+    },
+    {
+      "route": "/api/mobile/push-test",
+      "category": "mobile",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/mobile/push-test/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useNotifications.ts"
+      ]
+    },
+    {
+      "route": "/api/mobile/push-token",
+      "category": "mobile",
+      "methods": [
+        "POST",
+        "DELETE"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/mobile/push-token/route.ts",
+      "uiConsumers": [
+        "src/app/layout.tsx",
+        "src/lib/web-push/client-registration.ts"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/lib/pushNotifications.ts"
+      ]
+    },
+    {
+      "route": "/api/mobile/session",
+      "category": "mobile",
+      "methods": [
+        "GET",
+        "PATCH"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/mobile/session/route.ts",
+      "uiConsumers": [
+        "src/app/layout.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useAuth.ts",
+        "mobile-app/src/hooks/useUserProfile.ts",
+        "mobile-app/src/hooks/useWorkMatching.ts"
+      ]
+    },
+    {
+      "route": "/api/mobile/subscription/status",
+      "category": "mobile",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/mobile/subscription/status/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useSubscriptionStatus.ts"
+      ]
+    },
+    {
+      "route": "/api/mobile/v2/coupons/validate",
+      "category": "mobile",
+      "methods": [
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/mobile/v2/coupons/validate/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/mobile/v2/integrations/instagram/callback",
+      "category": "mobile",
+      "methods": [
+        "GET"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/mobile/v2/integrations/instagram/callback/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/mobile/v2/integrations/instagram/connect",
+      "category": "mobile",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/mobile/v2/integrations/instagram/connect/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useIntegrations.ts"
+      ]
+    },
+    {
+      "route": "/api/mobile/v2/integrations",
+      "category": "mobile",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/mobile/v2/integrations/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useIntegrations.ts"
+      ]
+    },
+    {
+      "route": "/api/mobile/v2/integrations/whatsapp/connect",
+      "category": "mobile",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/mobile/v2/integrations/whatsapp/connect/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useIntegrations.ts"
+      ]
+    },
+    {
+      "route": "/api/mobile/v2/lms/progress",
+      "category": "mobile",
+      "methods": [
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/mobile/v2/lms/progress/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/mobile/v2/lms",
+      "category": "mobile",
+      "methods": [
+        "GET"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/mobile/v2/lms/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/mobile/v2/onboarding/activate",
+      "category": "mobile",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/mobile/v2/onboarding/activate/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useAuth.ts"
+      ]
+    },
+    {
+      "route": "/api/mobile/v2/onboarding/agency-logo",
+      "category": "mobile",
+      "methods": [
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/mobile/v2/onboarding/agency-logo/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/mobile/v2/onboarding/profile",
+      "category": "mobile",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/mobile/v2/onboarding/profile/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/mobile/v2/onboarding/start",
+      "category": "mobile",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/mobile/v2/onboarding/start/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useAuth.ts"
+      ]
+    },
+    {
+      "route": "/api/mobile/v2/onboarding/verify",
+      "category": "mobile",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/mobile/v2/onboarding/verify/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useAuth.ts"
+      ]
+    },
+    {
+      "route": "/api/mobile/v2/team",
+      "category": "mobile",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/mobile/v2/team/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/mobile/v2/team/[freelancerId]",
+      "category": "mobile",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/mobile/v2/team/[freelancerId]/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/notifications",
+      "category": "notifications",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/notifications/route.ts",
+      "uiConsumers": [
+        "src/components/ui/internal-app-shell.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/components/PushNotificationProvider.tsx",
+        "mobile-app/src/hooks/useNotifications.ts"
+      ]
+    },
+    {
+      "route": "/api/notifications/[notificationId]/read",
+      "category": "notifications",
+      "methods": [
+        "CUSTOM/DYNAMIC"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/notifications/[notificationId]/read/route.ts",
+      "uiConsumers": [
+        "src/components/ui/internal-app-shell.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useNotifications.ts"
+      ]
+    },
+    {
+      "route": "/api/onboarding/complete-step",
+      "category": "onboarding",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/onboarding/complete-step/route.ts",
+      "uiConsumers": [
+        "src/components/onboarding/onboarding-experience.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/onboarding/dismiss",
+      "category": "onboarding",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/onboarding/dismiss/route.ts",
+      "uiConsumers": [
+        "src/components/onboarding/onboarding-experience.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/onboarding/progress",
+      "category": "onboarding",
+      "methods": [
+        "GET",
+        "PATCH"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/onboarding/progress/route.ts",
+      "uiConsumers": [
+        "src/components/onboarding/onboarding-experience.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useOnboarding.ts"
+      ]
+    },
+    {
+      "route": "/api/onboarding/reset",
+      "category": "onboarding",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/onboarding/reset/route.ts",
+      "uiConsumers": [
+        "src/components/onboarding/onboarding-experience.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/payment-requests",
+      "category": "payment-requests",
+      "methods": [
+        "GET"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/payment-requests/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/payment-requests/[paymentRequestId]",
+      "category": "payment-requests",
+      "methods": [
+        "PATCH"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/payment-requests/[paymentRequestId]/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/payments/phonepe/callback",
+      "category": "payments",
+      "methods": [
+        "POST"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/payments/phonepe/callback/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/payments/phonepe/chat-return",
+      "category": "payments",
+      "methods": [
+        "GET"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/payments/phonepe/chat-return/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/payments/phonepe/create",
+      "category": "payments",
+      "methods": [
+        "POST"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/payments/phonepe/create/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/payments/phonepe/editor-payment-return",
+      "category": "payments",
+      "methods": [
+        "GET"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/payments/phonepe/editor-payment-return/route.ts",
+      "uiConsumers": [
+        "src/lib/gigxomi/app-payment-request-service.ts"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/payments/phonepe/initiate",
+      "category": "payments",
+      "methods": [
+        "POST"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/payments/phonepe/initiate/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/payments/phonepe/return",
+      "category": "payments",
+      "methods": [
+        "GET"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/payments/phonepe/return/route.ts",
+      "uiConsumers": [
+        "src/lib/gigxomi/gapp-webinar-store.ts"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/payments/phonepe/status/[merchantTransactionId]",
+      "category": "payments",
+      "methods": [
+        "GET"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/payments/phonepe/status/[merchantTransactionId]/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/payments/phonepe/test-checkout",
+      "category": "payments",
+      "methods": [
+        "POST"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/payments/phonepe/test-checkout/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/payments/phonepe/test-return",
+      "category": "payments",
+      "methods": [
+        "GET"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/payments/phonepe/test-return/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/payments/phonepe/webhook",
+      "category": "payments",
+      "methods": [
+        "POST"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/payments/phonepe/webhook/route.ts",
+      "uiConsumers": [
+        "src/lib/gigxomi/gapp-webinar-store.ts"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/payments/security",
+      "category": "payments",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/payments/security/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/portfolio/drafts",
+      "category": "portfolio",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/portfolio/drafts/route.ts",
+      "uiConsumers": [
+        "src/components/delivery/portfolio-draft-workspace.tsx",
+        "src/components/freelancer/publishing-assistant.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/portfolio/drafts/[id]/publish",
+      "category": "portfolio",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/portfolio/drafts/[id]/publish/route.ts",
+      "uiConsumers": [
+        "src/components/delivery/portfolio-draft-workspace.tsx",
+        "src/components/freelancer/publishing-assistant.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/portfolio/drafts/[id]/retry",
+      "category": "portfolio",
+      "methods": [
+        "CUSTOM/DYNAMIC"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/portfolio/drafts/[id]/retry/route.ts",
+      "uiConsumers": [
+        "src/components/delivery/portfolio-draft-workspace.tsx",
+        "src/components/freelancer/publishing-assistant.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/portfolio/drafts/[id]/review",
+      "category": "portfolio",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/portfolio/drafts/[id]/review/route.ts",
+      "uiConsumers": [
+        "src/components/delivery/portfolio-draft-workspace.tsx",
+        "src/components/freelancer/publishing-assistant.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/public-growth/events",
+      "category": "public-growth",
+      "methods": [
+        "POST"
+      ],
+      "type": "SSE_STREAM",
+      "sourceFile": "src/app/api/public-growth/events/route.ts",
+      "uiConsumers": [
+        "src/lib/gigxomi/public-growth-client.ts"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/publishing/drafts",
+      "category": "publishing",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/publishing/drafts/route.ts",
+      "uiConsumers": [
+        "src/components/freelancer/freelancer-section-content.tsx",
+        "src/components/freelancer/freelancer-service-lists.tsx",
+        "src/components/freelancer/freelancer-service-management.tsx",
+        "src/components/freelancer/publishing-assistant.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/publishing/drafts/[id]/message",
+      "category": "publishing",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/publishing/drafts/[id]/message/route.ts",
+      "uiConsumers": [
+        "src/components/freelancer/publishing-assistant.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/publishing/drafts/[id]",
+      "category": "publishing",
+      "methods": [
+        "GET",
+        "PATCH"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/publishing/drafts/[id]/route.ts",
+      "uiConsumers": [
+        "src/components/freelancer/publishing-assistant.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/publishing/drafts/[id]/suggest",
+      "category": "publishing",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/publishing/drafts/[id]/suggest/route.ts",
+      "uiConsumers": [
+        "src/components/freelancer/publishing-assistant.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/quotes/approve",
+      "category": "quotes",
+      "methods": [
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/quotes/approve/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/quotes/propose",
+      "category": "quotes",
+      "methods": [
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/quotes/propose/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/auth/signup",
+      "category": "sales",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/sales/auth/signup/route.ts",
+      "uiConsumers": [
+        "src/components/sales/sales-auth.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/conversations",
+      "category": "sales",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/sales/conversations/route.ts",
+      "uiConsumers": [
+        "src/components/sales/sales-dashboard.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/conversations/[leadId]/note",
+      "category": "sales",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/sales/conversations/[leadId]/note/route.ts",
+      "uiConsumers": [
+        "src/components/sales/sales-dashboard.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/conversations/[leadId]",
+      "category": "sales",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/sales/conversations/[leadId]/route.ts",
+      "uiConsumers": [
+        "src/components/sales/sales-dashboard.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/dashboard",
+      "category": "sales",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/sales/dashboard/route.ts",
+      "uiConsumers": [
+        "src/components/sales/sales-dashboard.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/deals",
+      "category": "sales",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/sales/deals/route.ts",
+      "uiConsumers": [
+        "src/components/sales/sales-dashboard.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/earnings",
+      "category": "sales",
+      "methods": [
+        "GET"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/sales/earnings/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/gapp-webinar-registrations",
+      "category": "sales",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/sales/gapp-webinar-registrations/route.ts",
+      "uiConsumers": [
+        "src/components/sales/sales-dashboard.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/leads/distribute",
+      "category": "sales",
+      "methods": [
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/sales/leads/distribute/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/leads/import",
+      "category": "sales",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/sales/leads/import/route.ts",
+      "uiConsumers": [
+        "src/components/sales/sales-dashboard.tsx",
+        "src/components/super-admin/super-admin-sales-control.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/leads",
+      "category": "sales",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/sales/leads/route.ts",
+      "uiConsumers": [
+        "src/components/sales/sales-dashboard.tsx",
+        "src/components/super-admin/super-admin-sales-control.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/learning-wall",
+      "category": "sales",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/sales/learning-wall/route.ts",
+      "uiConsumers": [
+        "src/components/sales/sales-dashboard.tsx",
+        "src/components/super-admin/super-admin-sales-control.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/learning-wall/[id]/helpful",
+      "category": "sales",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/sales/learning-wall/[id]/helpful/route.ts",
+      "uiConsumers": [
+        "src/components/sales/sales-dashboard.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/lms/courses",
+      "category": "sales",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/sales/lms/courses/route.ts",
+      "uiConsumers": [
+        "src/components/sales/sales-dashboard.tsx",
+        "src/components/super-admin/super-admin-sales-control.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/lms/lessons",
+      "category": "sales",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/sales/lms/lessons/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-sales-control.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/lms/mock-call",
+      "category": "sales",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/sales/lms/mock-call/route.ts",
+      "uiConsumers": [
+        "src/components/sales/sales-dashboard.tsx",
+        "src/components/super-admin/super-admin-sales-control.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/lms/mock-call/[id]/review",
+      "category": "sales",
+      "methods": [
+        "PATCH"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/sales/lms/mock-call/[id]/review/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-sales-control.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/lms/modules",
+      "category": "sales",
+      "methods": [
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/sales/lms/modules/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/lms/my-progress",
+      "category": "sales",
+      "methods": [
+        "GET"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/sales/lms/my-progress/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/lms/progress",
+      "category": "sales",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/sales/lms/progress/route.ts",
+      "uiConsumers": [
+        "src/components/sales/sales-dashboard.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/messages",
+      "category": "sales",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/sales/messages/route.ts",
+      "uiConsumers": [
+        "src/components/sales/sales-dashboard.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/meta-conversions",
+      "category": "sales",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/sales/meta-conversions/route.ts",
+      "uiConsumers": [
+        "src/components/sales/meta-lead-qualification.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/mobile/bootstrap",
+      "category": "sales",
+      "methods": [
+        "GET"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/sales/mobile/bootstrap/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/mobile/call/disposition",
+      "category": "sales",
+      "methods": [
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/sales/mobile/call/disposition/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/mobile/call/end",
+      "category": "sales",
+      "methods": [
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/sales/mobile/call/end/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/mobile/call/recording-upload",
+      "category": "sales",
+      "methods": [
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/sales/mobile/call/recording-upload/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/mobile/call/start",
+      "category": "sales",
+      "methods": [
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/sales/mobile/call/start/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/mobile/calls/[id]/recording",
+      "category": "sales",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/sales/mobile/calls/[id]/recording/route.ts",
+      "uiConsumers": [
+        "src/components/sales/sales-dashboard.tsx",
+        "src/components/super-admin/super-admin-sales-control.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/mobile/contacts/sync",
+      "category": "sales",
+      "methods": [
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/sales/mobile/contacts/sync/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/mobile/heartbeat",
+      "category": "sales",
+      "methods": [
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/sales/mobile/heartbeat/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/mobile/inbox",
+      "category": "sales",
+      "methods": [
+        "GET"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/sales/mobile/inbox/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/mobile/lead-packs/request",
+      "category": "sales",
+      "methods": [
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/sales/mobile/lead-packs/request/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/mobile/lead-packs/[id]/claim",
+      "category": "sales",
+      "methods": [
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/sales/mobile/lead-packs/[id]/claim/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/mobile/offline-events/sync",
+      "category": "sales",
+      "methods": [
+        "POST"
+      ],
+      "type": "SSE_STREAM",
+      "sourceFile": "src/app/api/sales/mobile/offline-events/sync/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/mobile/register-device",
+      "category": "sales",
+      "methods": [
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/sales/mobile/register-device/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/payouts",
+      "category": "sales",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/sales/payouts/route.ts",
+      "uiConsumers": [
+        "src/components/sales/sales-dashboard.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/profile",
+      "category": "sales",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/sales/profile/route.ts",
+      "uiConsumers": [
+        "src/components/sales/sales-dashboard.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/referrals",
+      "category": "sales",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/sales/referrals/route.ts",
+      "uiConsumers": [
+        "src/components/analytics/referral-tracker.tsx",
+        "src/components/sales/sales-dashboard.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/referrals/track",
+      "category": "sales",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/sales/referrals/track/route.ts",
+      "uiConsumers": [
+        "src/components/analytics/referral-tracker.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/reports",
+      "category": "sales",
+      "methods": [
+        "GET"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/sales/reports/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/round-robin/rules",
+      "category": "sales",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/sales/round-robin/rules/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-sales-control.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/team",
+      "category": "sales",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/sales/team/route.ts",
+      "uiConsumers": [
+        "src/components/sales/sales-dashboard.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/training-ladder/evaluate",
+      "category": "sales",
+      "methods": [
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/sales/training-ladder/evaluate/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/training-ladder",
+      "category": "sales",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/sales/training-ladder/route.ts",
+      "uiConsumers": [
+        "src/components/sales/sales-dashboard.tsx",
+        "src/components/super-admin/super-admin-sales-control.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/webinars/invite",
+      "category": "sales",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/sales/webinars/invite/route.ts",
+      "uiConsumers": [
+        "src/components/sales/sales-dashboard.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/webinars/invite/[id]/attendance",
+      "category": "sales",
+      "methods": [
+        "PATCH"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/sales/webinars/invite/[id]/attendance/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/webinars",
+      "category": "sales",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/sales/webinars/route.ts",
+      "uiConsumers": [
+        "src/components/sales/sales-dashboard.tsx",
+        "src/components/super-admin/super-admin-sales-control.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/whatsapp",
+      "category": "sales",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/sales/whatsapp/route.ts",
+      "uiConsumers": [
+        "src/components/sales/sales-dashboard.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sales/whatsapp-flows",
+      "category": "sales",
+      "methods": [
+        "GET",
+        "POST",
+        "PATCH",
+        "DELETE"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/sales/whatsapp-flows/route.ts",
+      "uiConsumers": [
+        "src/components/sales/sales-dashboard.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/services",
+      "category": "services",
+      "methods": [
+        "GET"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/services/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/showcase/permission",
+      "category": "showcase",
+      "methods": [
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/showcase/permission/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/subscriptions/phonepe/cancel",
+      "category": "subscriptions",
+      "methods": [
+        "POST"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/subscriptions/phonepe/cancel/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/subscriptions/phonepe/execute-redemption",
+      "category": "subscriptions",
+      "methods": [
+        "POST"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/subscriptions/phonepe/execute-redemption/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/subscriptions/phonepe/notify-redemption",
+      "category": "subscriptions",
+      "methods": [
+        "POST"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/subscriptions/phonepe/notify-redemption/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/subscriptions/phonepe/pause",
+      "category": "subscriptions",
+      "methods": [
+        "POST"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/subscriptions/phonepe/pause/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/subscriptions/phonepe/redemption-status/[merchantOrderId]",
+      "category": "subscriptions",
+      "methods": [
+        "GET"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/subscriptions/phonepe/redemption-status/[merchantOrderId]/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/subscriptions/phonepe/return",
+      "category": "subscriptions",
+      "methods": [
+        "GET"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/subscriptions/phonepe/return/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/subscriptions/phonepe/setup",
+      "category": "subscriptions",
+      "methods": [
+        "POST"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/subscriptions/phonepe/setup/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/subscriptions/phonepe/setup-status/[merchantOrderId]",
+      "category": "subscriptions",
+      "methods": [
+        "GET"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/subscriptions/phonepe/setup-status/[merchantOrderId]/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/subscriptions/phonepe/status/[merchantSubscriptionId]",
+      "category": "subscriptions",
+      "methods": [
+        "GET"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/subscriptions/phonepe/status/[merchantSubscriptionId]/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/subscriptions/phonepe/unpause",
+      "category": "subscriptions",
+      "methods": [
+        "POST"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/subscriptions/phonepe/unpause/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/subscriptions/phonepe/webhook",
+      "category": "subscriptions",
+      "methods": [
+        "POST"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/subscriptions/phonepe/webhook/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/billing-reminders",
+      "category": "super-admin",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/billing-reminders/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-manual-upi-control.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/coupons",
+      "category": "super-admin",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/coupons/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/connected-platform-control.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/dashboard",
+      "category": "super-admin",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/super-admin/dashboard/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-live-dashboard.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useRoleDashboard.ts"
+      ]
+    },
+    {
+      "route": "/api/super-admin/drip-campaigns",
+      "category": "super-admin",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/drip-campaigns/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/connected-platform-control.tsx",
+        "src/components/super-admin/super-admin-push-notifications-console.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/drip-campaigns/run",
+      "category": "super-admin",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/drip-campaigns/run/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-push-notifications-console.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/freelancer-assessments/reset",
+      "category": "super-admin",
+      "methods": [
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/super-admin/freelancer-assessments/reset/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/freelancer-onboarding/backfill",
+      "category": "super-admin",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/super-admin/freelancer-onboarding/backfill/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/freelancer-portfolio-reviews",
+      "category": "super-admin",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/freelancer-portfolio-reviews/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-portfolio-approval-panel.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/freelancer-trust-disputes",
+      "category": "super-admin",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/freelancer-trust-disputes/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-portfolio-approval-panel.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/freelancers/export",
+      "category": "super-admin",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/freelancers/export/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-access-control.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/gapp-webinars",
+      "category": "super-admin",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/gapp-webinars/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/gapp-webinar-console.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/gapp-webinars/[id]/registrations.csv",
+      "category": "super-admin",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/gapp-webinars/[id]/registrations.csv/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/gapp-webinar-console.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/gapp-webinars/[id]/thumbnail",
+      "category": "super-admin",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/gapp-webinars/[id]/thumbnail/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/gapp-webinar-console.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/knowledge-base/categories",
+      "category": "super-admin",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/knowledge-base/categories/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-knowledge-base-console.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/knowledge-base/categories/[id]",
+      "category": "super-admin",
+      "methods": [
+        "PATCH",
+        "DELETE"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/knowledge-base/categories/[id]/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-knowledge-base-console.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/knowledge-base",
+      "category": "super-admin",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/knowledge-base/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-knowledge-base-console.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/knowledge-base/[id]",
+      "category": "super-admin",
+      "methods": [
+        "PATCH",
+        "DELETE"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/knowledge-base/[id]/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-knowledge-base-console.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/lms",
+      "category": "super-admin",
+      "methods": [
+        "GET",
+        "POST",
+        "DELETE"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/lms/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/connected-platform-control.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/manual-upi-payments/[id]/approve",
+      "category": "super-admin",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/manual-upi-payments/[id]/approve/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-manual-upi-control.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/manual-upi-payments/[id]/reject",
+      "category": "super-admin",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/manual-upi-payments/[id]/reject/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-manual-upi-control.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/marketing",
+      "category": "super-admin",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/marketing/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-marketing-console.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/packages",
+      "category": "super-admin",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/packages/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-package-management.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/payment-providers/manual-upi",
+      "category": "super-admin",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/payment-providers/manual-upi/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-manual-upi-control.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/payment-providers/phonepe",
+      "category": "super-admin",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/super-admin/payment-providers/phonepe/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-phonepe-control.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/plugins/instagram-inbox",
+      "category": "super-admin",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/plugins/instagram-inbox/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-instagram-plugin-card.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/push-broadcast",
+      "category": "super-admin",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/super-admin/push-broadcast/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/push-notifications/overview",
+      "category": "super-admin",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/push-notifications/overview/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-push-notifications-console.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/push-notifications/send",
+      "category": "super-admin",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/push-notifications/send/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-marketing-console.tsx",
+        "src/components/super-admin/super-admin-push-notifications-console.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/push-notifications/user/[userId]",
+      "category": "super-admin",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/push-notifications/user/[userId]/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-push-notifications-console.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/sales",
+      "category": "super-admin",
+      "methods": [
+        "GET",
+        "POST",
+        "DELETE"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/sales/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-sales-control.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/services/review",
+      "category": "super-admin",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/services/review/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-service-review.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/trust-rules",
+      "category": "super-admin",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/trust-rules/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/connected-platform-control.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/users",
+      "category": "super-admin",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/users/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-access-control.tsx",
+        "src/components/super-admin/super-admin-user-management.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/users/[id]/impersonate",
+      "category": "super-admin",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/users/[id]/impersonate/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-access-control.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/users/[id]",
+      "category": "super-admin",
+      "methods": [
+        "PATCH",
+        "DELETE"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/users/[id]/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-access-control.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/whatsapp-flows",
+      "category": "super-admin",
+      "methods": [
+        "GET",
+        "POST",
+        "PATCH",
+        "DELETE"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/whatsapp-flows/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-whatsapp-flow-builder.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/whatsapp-flows/runtime",
+      "category": "super-admin",
+      "methods": [
+        "GET"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/super-admin/whatsapp-flows/runtime/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/whatsapp-flows/[flowId]",
+      "category": "super-admin",
+      "methods": [
+        "GET",
+        "PATCH",
+        "DELETE"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/super-admin/whatsapp-flows/[flowId]/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/whatsapp-otp-intents",
+      "category": "super-admin",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/whatsapp-otp-intents/route.ts",
+      "uiConsumers": [
+        "src/components/super-admin/super-admin-whatsapp-otp-requests.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/youtube/callback",
+      "category": "super-admin",
+      "methods": [
+        "GET"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/super-admin/youtube/callback/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/youtube/connect",
+      "category": "super-admin",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/youtube/connect/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-youtube-controls.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/super-admin/youtube/disconnect",
+      "category": "super-admin",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/super-admin/youtube/disconnect/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-youtube-controls.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/support-bot/handoff",
+      "category": "support-bot",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/support-bot/handoff/route.ts",
+      "uiConsumers": [
+        "src/components/support/support-bot-widget.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/support-bot/query",
+      "category": "support-bot",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/support-bot/query/route.ts",
+      "uiConsumers": [
+        "src/components/support/support-bot-widget.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/sync/wordpress",
+      "category": "sync",
+      "methods": [
+        "GET"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/sync/wordpress/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/system/db-health",
+      "category": "system",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_MOBILE",
+      "sourceFile": "src/app/api/system/db-health/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useIntegrations.ts"
+      ]
+    },
+    {
+      "route": "/api/task-applications/[applicationId]",
+      "category": "task-applications",
+      "methods": [
+        "PATCH"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/task-applications/[applicationId]/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-work-hub-client.tsx",
+        "src/components/work-matching/work-matching-dashboard.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useWorkMatching.ts"
+      ]
+    },
+    {
+      "route": "/api/tasks",
+      "category": "tasks",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/tasks/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-work-hub-client.tsx",
+        "src/components/freelancer/freelancer-section-content.tsx",
+        "src/components/work-matching/work-matching-dashboard.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useWorkMatching.ts"
+      ]
+    },
+    {
+      "route": "/api/tasks/[taskId]/applications",
+      "category": "tasks",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/tasks/[taskId]/applications/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-work-hub-client.tsx",
+        "src/components/freelancer/freelancer-section-content.tsx",
+        "src/components/work-matching/work-matching-dashboard.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useWorkMatching.ts"
+      ]
+    },
+    {
+      "route": "/api/tasks/[taskId]",
+      "category": "tasks",
+      "methods": [
+        "DELETE"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/tasks/[taskId]/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-work-hub-client.tsx",
+        "src/components/freelancer/freelancer-section-content.tsx",
+        "src/components/work-matching/work-matching-dashboard.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useWorkMatching.ts"
+      ]
+    },
+    {
+      "route": "/api/team/editor-directory",
+      "category": "team",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/team/editor-directory/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-work-hub-client.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/team/editor-directory/[id]",
+      "category": "team",
+      "methods": [
+        "GET"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/team/editor-directory/[id]/route.ts",
+      "uiConsumers": [
+        "src/components/admin/admin-work-hub-client.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/team/memberships/[id]",
+      "category": "team",
+      "methods": [
+        "PATCH",
+        "DELETE"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/team/memberships/[id]/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/team-requests",
+      "category": "team-requests",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/team-requests/route.ts",
+      "uiConsumers": [
+        "src/components/freelancer/freelancer-section-content.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/team-requests/[requestId]/cancel",
+      "category": "team-requests",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/team-requests/[requestId]/cancel/route.ts",
+      "uiConsumers": [
+        "src/components/freelancer/freelancer-section-content.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/team-requests/[requestId]/respond",
+      "category": "team-requests",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/team-requests/[requestId]/respond/route.ts",
+      "uiConsumers": [
+        "src/components/freelancer/freelancer-section-content.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/tenants",
+      "category": "tenants",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/tenants/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/tenants/[tenantId]/team-requests",
+      "category": "tenants",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/tenants/[tenantId]/team-requests/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/tenants/[tenantId]/team-seats",
+      "category": "tenants",
+      "methods": [
+        "GET"
+      ],
+      "type": "ORPHANED_CANDIDATE",
+      "sourceFile": "src/app/api/tenants/[tenantId]/team-seats/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/webhooks/razorpay",
+      "category": "webhooks",
+      "methods": [
+        "POST"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/webhooks/razorpay/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/webhooks/webinar-gg",
+      "category": "webhooks",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/webhooks/webinar-gg/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/whatsapp/webhook",
+      "category": "whatsapp",
+      "methods": [
+        "CUSTOM/DYNAMIC"
+      ],
+      "type": "WEBHOOK_EXTERNAL",
+      "sourceFile": "src/app/api/whatsapp/webhook/route.ts",
+      "uiConsumers": [],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/work-applications/[id]",
+      "category": "work-applications",
+      "methods": [
+        "PATCH"
+      ],
+      "type": "ACTIVE_UI",
+      "sourceFile": "src/app/api/work-applications/[id]/route.ts",
+      "uiConsumers": [
+        "src/components/work-matching/work-matching-dashboard.tsx"
+      ],
+      "mobileConsumers": []
+    },
+    {
+      "route": "/api/work-invites/[id]",
+      "category": "work-invites",
+      "methods": [
+        "PATCH"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/work-invites/[id]/route.ts",
+      "uiConsumers": [
+        "src/components/work-matching/work-matching-dashboard.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useWorkMatching.ts"
+      ]
+    },
+    {
+      "route": "/api/work-posts",
+      "category": "work-posts",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/work-posts/route.ts",
+      "uiConsumers": [
+        "src/components/work-matching/work-matching-dashboard.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useWorkMatching.ts"
+      ]
+    },
+    {
+      "route": "/api/work-posts/[id]/applications",
+      "category": "work-posts",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/work-posts/[id]/applications/route.ts",
+      "uiConsumers": [
+        "src/components/work-matching/work-matching-dashboard.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useWorkMatching.ts"
+      ]
+    },
+    {
+      "route": "/api/work-posts/[id]/invites",
+      "category": "work-posts",
+      "methods": [
+        "POST"
+      ],
+      "type": "ACTIVE_UI_AND_MOBILE",
+      "sourceFile": "src/app/api/work-posts/[id]/invites/route.ts",
+      "uiConsumers": [
+        "src/components/work-matching/work-matching-dashboard.tsx"
+      ],
+      "mobileConsumers": [
+        "mobile-app/src/hooks/useWorkMatching.ts"
+      ]
+    }
+  ]
+}

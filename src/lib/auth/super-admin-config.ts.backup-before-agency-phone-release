@@ -1,0 +1,4 @@
+export const SUPER_ADMIN_LOGIN_ROUTE = "/super-admin/login";
+export const SUPER_ADMIN_HOME_ROUTE = "/super-admin";
+export const SUPER_ADMIN_LOGIN_EMAIL = "hello.ankitrathore@gmail.com";
+export const SUPER_ADMIN_ALLOWED_OTP_PHONES = ["9981807309"] as const;
