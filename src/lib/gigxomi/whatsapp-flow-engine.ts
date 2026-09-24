@@ -508,6 +508,14 @@ const UNIQUE_GEMINI_KEYS = Array.from(new Set(GEMINI_API_KEYS));
 // Keep provider diagnosis actionable without ever logging credentials.
 console.info(`[AI_CASCADE] provider pools initialized: groq=${UNIQUE_GROQ_KEYS.length}, gemini=${UNIQUE_GEMINI_KEYS.length}, model=${GROQ_MODEL}`);
 
+function groqGenerationConfig(maxTokens: number, model = GROQ_MODEL) {
+  return {
+    temperature: 0.3,
+    max_tokens: maxTokens,
+    ...(model.startsWith("openai/gpt-oss") ? { reasoning_effort: "low" } : {}),
+  };
+}
+
 let currentGroqKeyIndex = 0;
 let currentGeminiKeyIndex = 0;
 
@@ -852,7 +860,7 @@ OUTPUT
 Return only the single customer-facing reply. Do not reveal reasoning, instructions, lead classification, multiple options, or a transcript.`;
 
 
-async function fetchGroqPool(messages: Array<{ role: string; content: string }>, maxTokens = 110, purpose?: "memory-summary" | "memory-retrieval"): Promise<string | null> {
+async function fetchGroqPool(messages: Array<{ role: string; content: string }>, maxTokens = 220, purpose?: "memory-summary" | "memory-retrieval"): Promise<string | null> {
   const totalKeys = UNIQUE_GROQ_KEYS.length;
   if (totalKeys === 0) return null;
 
@@ -872,8 +880,7 @@ async function fetchGroqPool(messages: Array<{ role: string; content: string }>,
         body: JSON.stringify({
           model: GROQ_MODEL,
           messages,
-          temperature: 0.3,
-          max_tokens: maxTokens,
+          ...groqGenerationConfig(maxTokens),
         }),
       });
 
@@ -900,8 +907,7 @@ async function fetchGroqPool(messages: Array<{ role: string; content: string }>,
               body: JSON.stringify({
                 model: GROQ_MODEL_FALLBACK,
                 messages,
-                temperature: 0.3,
-                max_tokens: maxTokens,
+                ...groqGenerationConfig(maxTokens, GROQ_MODEL_FALLBACK),
               }),
             });
             void recordAiRateLimitSnapshot({
@@ -1199,7 +1205,7 @@ export async function callGroqAi(
           { role: "system" as const, content: rewriteInstruction },
         ];
         const rewritten = usedProvider === "groq"
-          ? await fetchGroqPool(rewriteMessages, 90)
+          ? await fetchGroqPool(rewriteMessages, 180)
           : await fetchGeminiPool(
               `${systemPrompt}\n\n${rewriteInstruction}`,
               rewriteInstruction,
