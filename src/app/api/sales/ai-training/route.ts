@@ -1,3 +1,4 @@
+import { runMemoryTest } from "@/lib/gigxomi/conversation-memory-test";
 import { NextResponse } from "next/server";
 import {
   AI_SALES_STAGES,
@@ -33,6 +34,10 @@ export async function POST(request: Request) {
   if (!isAuthorized(request)) return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
   const body = await request.json().catch(() => null) as Record<string, unknown> | null;
   const action = String(body?.action ?? "");
+  if (action === "memory-test") {
+    try { return NextResponse.json(await runMemoryTest(body || {})); }
+    catch (error) { return NextResponse.json({ ok: false, error: error instanceof Error ? error.message : "Memory test failed" }, { status: 400 }); }
+  }
   if (action === "test") {
     const messages = Array.isArray(body?.messages)
       ? body.messages

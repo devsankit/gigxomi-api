@@ -7,12 +7,27 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET() {
   const auth = await requireSessionRole(["SUPER_ADMIN"]); if (!auth.ok) return auth.response;
-  const [reviews, services, disputes] = await Promise.all([
-    prisma.appFreelancerPortfolioReview.findMany({ orderBy: { submittedAt: "desc" }, take: 100, include: { freelancer: { select: { displayName: true, email: true, phone: true } } } }),
-    listAllServicesFromFile(),
+  const [reviews, services, dbServices, disputes] = await Promise.all([
+    prisma.appFreelancerPortfolioReview.findMany({ orderBy: { submittedAt: "desc" }, take: 500, include: { freelancer: { select: { displayName: true, email: true, phone: true } } } }),
+    listAllServicesFromFile().catch(() => []),
+    prisma.appFreelancerService.findMany({ select: { id: true, slug: true, status: true, payload: true } }).catch(() => []),
     prisma.appFreelancerTrustDispute.findMany({ where: { status: "OPEN" }, orderBy: { createdAt: "desc" }, include: { event: true, user: { select: { displayName: true } } } }),
   ]);
-  const serviceMap = new Map(services.map((service) => [service.id, service]));
+  const serviceMap = new Map<string, any>(services.map((service) => [service.id, service]));
+  for (const dbSvc of dbServices) {
+    if (!serviceMap.has(dbSvc.id)) {
+      const payload = (dbSvc.payload && typeof dbSvc.payload === "object" ? dbSvc.payload : {}) as Record<string, any>;
+      serviceMap.set(dbSvc.id, {
+        id: dbSvc.id,
+        slug: dbSvc.slug,
+        title: payload.title || "Video Editing Service",
+        primaryEditorCategory: payload.category || payload.specialty || "Video Editing",
+        secondaryEditorCategories: Array.isArray(payload.tags) ? payload.tags : [],
+        sampleVideoUrl: payload.sampleVideoUrl || payload.wordpressSource?.video_url || null,
+        ...payload,
+      });
+    }
+  }
   const ids = Array.from(new Set(reviews.map((item) => item.freelancerId)));
   const [assessments, scores] = await Promise.all([
     prisma.appFreelancerAssessment.findMany({ where: { userId: { in: ids } }, select: { userId: true, score: true } }),

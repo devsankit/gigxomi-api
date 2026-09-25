@@ -3243,3 +3243,49 @@ model SupportBotMessage {
 
   @@index([sessionId, createdAt])
 }
+
+// Persistent memory is isolated from business conversations; no destructive FK migrations.
+model AiConversationMemoryMessage {
+  scope     String
+  id        String
+  sourceId  String
+  payload   Json
+  createdAt DateTime @default(now())
+
+  @@id([scope, id])
+  @@index([scope, sourceId])
+}
+
+model AiConversationMemoryNode {
+  scope     String
+  id        String
+  payload   Json
+  createdAt DateTime @default(now())
+
+  @@id([scope, id])
+}
+
+model AiConversationMemoryCheckpoint {
+  scope     String   @id
+  version   String
+  payload   Json
+  updatedAt DateTime @default(now())
+}
+
+model AppAgencyApiToken {
+  id          String    @id @default(cuid())
+  tenantId    String
+  tokenHash   String    @unique
+  tokenPrefix String
+  name        String
+  scopes      String[]  @default(["team_portfolio:read"])
+  allowedOrigins String[] @default([])
+  createdById String
+  createdAt   DateTime  @default(now())
+  lastUsedAt  DateTime?
+  revokedAt   DateTime?
+
+  @@index([tenantId])
+  @@index([tokenHash])
+}
+

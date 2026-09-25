@@ -1,0 +1,1 @@
+ALTER TABLE "AppAgencyApiToken" ADD COLUMN IF NOT EXISTS "allowedOrigins" TEXT[] NOT NULL DEFAULT ARRAY[]::TEXT[];
