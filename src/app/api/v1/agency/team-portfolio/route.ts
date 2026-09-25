@@ -6,6 +6,7 @@ import { getSessionContext } from "@/lib/auth/session";
 import { resolveSessionTenantId } from "@/lib/api/resolve-session-tenant";
 import { verifyInternalAgencyAssertion } from "@/lib/api/internal-assertion";
 import { checkTeamPortfolioRateLimit } from "@/lib/api/rate-limit";
+import { prisma } from "@/lib/prisma";
 
 const ALLOWED_ORIGINS = [
   "https://agency.gigxomi.com",
@@ -72,6 +73,23 @@ export async function GET(request: Request) {
       return NextResponse.json(
         { success: false, error: assertionResult.error, code: "UNAUTHORIZED" },
         { status: 401, headers: { ...corsHeaders, "Cache-Control": "no-store" } },
+      );
+    }
+    const principal = await (prisma as any).appAuthUser.findFirst({
+      where: {
+        id: assertionResult.assertion.subjectUserId,
+        tenantId: assertionResult.assertion.tenantId,
+        packageAudience: "AGENCY",
+        workspaceMode: "AGENCY",
+        packageStatus: "ACTIVE",
+        role: { in: ["ADMIN", "MANAGER"] },
+      },
+      select: { id: true },
+    });
+    if (!principal) {
+      return NextResponse.json(
+        { success: false, error: "Internal agency principal is inactive or not part of this tenant.", code: "FORBIDDEN" },
+        { status: 403, headers: { ...corsHeaders, "Cache-Control": "no-store" } },
       );
     }
     resolvedTenantId = assertionResult.assertion.tenantId;
@@ -145,7 +163,8 @@ export async function GET(request: Request) {
       : undefined;
 
   const memberId = searchParams.get("memberId")?.trim() || undefined;
-  const limitParam = Number(searchParams.get("limit"));
+  const limitRaw = searchParams.get("limit")?.trim();
+  const limitParam = limitRaw ? Number(limitRaw) : 20;
   const limit = Number.isFinite(limitParam) ? Math.max(1, Math.min(100, Math.round(limitParam))) : 20;
   const cursor = searchParams.get("cursor")?.trim() || undefined;
 

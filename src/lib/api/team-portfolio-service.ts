@@ -141,18 +141,26 @@ export async function getAgencyTeamPortfolio(
 ): Promise<TeamPortfolioResponseData> {
   const cleanTenantId = tenantId.trim();
 
-  // 1. Resolve Agency Details
-  const tenant = await (prisma as any).tenant.findUnique({
-    where: { id: cleanTenantId },
-    select: { id: true, name: true, slug: true, status: true },
+  // 1. Resolve the real Gigxomi agency identity. Agency accounts use the
+  // AppAuthUser/AppTeamMembership tenancy model; the legacy Tenant table is
+  // not populated for these workspaces.
+  const agencyUser = await (prisma as any).appAuthUser.findFirst({
+    where: {
+      tenantId: cleanTenantId,
+      packageAudience: "AGENCY",
+      workspaceMode: "AGENCY",
+      packageStatus: "ACTIVE",
+      role: { in: ["ADMIN", "MANAGER"] },
+    },
+    select: { id: true, displayName: true },
   });
 
-  if (!tenant || tenant.status !== "ACTIVE") {
+  if (!agencyUser) {
     throw new Error("Agency tenant is inactive or unavailable");
   }
 
-  const agencyName = tenant?.name || "Agency Workspace";
-  const agencySlug = tenant?.slug || cleanTenantId;
+  const agencyName = cleanText(agencyUser.displayName, "Agency Workspace");
+  const agencySlug = cleanTenantId;
 
   // 2. Fetch Active Team Members for this Tenant
   const memberships = await (prisma as any).appTeamMembership.findMany({
