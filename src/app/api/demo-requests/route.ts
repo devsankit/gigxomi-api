@@ -38,9 +38,9 @@ export async function POST(request: Request) {
   if (clean(payload.website, 200)) return NextResponse.json({ ok: true });
 
   const name = clean(payload.name, 100);
-  const businessName = clean(payload.businessName, 120);
+  const businessName = clean(payload.businessName || payload.business, 120);
   const email = clean(payload.email, 160).toLowerCase();
-  const phone = clean(payload.phone, 30);
+  const phone = clean(payload.phone || payload.contactNumber, 30);
   const message = clean(payload.message, 1000);
 
   if (!name) return NextResponse.json({ ok: false, error: "Please enter your name." }, { status: 400 });
@@ -48,20 +48,21 @@ export async function POST(request: Request) {
   if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return NextResponse.json({ ok: false, error: "Please enter a valid email address." }, { status: 400 });
 
   try {
-    await createSalesLeadPoolItem({
+    const lead = await createSalesLeadPoolItem({
       customerName: name,
       customerEmail: email,
       customerPhone: phone,
-      source: "Gigxomi Website - Get Demo",
+      source: clean(payload.source, 100) || "Gigxomi Website - Get Demo",
       segment: "DEMO_REQUEST",
-      serviceInterest: "Gigxomi platform demo",
+      serviceInterest: businessName ? `${businessName} (Agency Demo)` : "Gigxomi platform demo",
       priority: "HIGH",
       notes: [
         businessName ? `Business: ${businessName}` : "",
-        message || "Requested a Gigxomi platform demo from the homepage.",
+        phone ? `Contact Phone: ${phone}` : "",
+        message || "Requested a Gigxomi platform demo from the website demo form.",
       ].filter(Boolean).join("\n"),
     });
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true, leadId: lead.id });
   } catch (error) {
     console.error("Demo request submission failed", error);
     return NextResponse.json({ ok: false, error: "We could not save your request right now. Please try again." }, { status: 500 });
