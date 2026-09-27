@@ -244,13 +244,21 @@ export async function GET(request: Request) {
     agencyAccounts = [];
   }
 
+  const DELETED_DUMMY_SLUGS = new Set(["gigxomi-studio", "omni-flow-studio", "editors-hub"]);
+  const DELETED_DUMMY_TENANT_IDS = new Set(["tenant-gigxomi", "tenant-omni-flow", "tenant-editors-hub"]);
+
   const publishedTenantIds = new Set(profiles.map((profile) => profile.tenantId));
   const directoryProfiles = [
     ...profiles,
     ...agencyAccounts
       .filter((account) => !publishedTenantIds.has(account.tenantId || account.id))
       .map(profileFromAgencyAccount),
-  ];
+  ].filter(
+    (profile) =>
+      !DELETED_DUMMY_SLUGS.has(profile.slug) &&
+      !DELETED_DUMMY_TENANT_IDS.has(profile.id) &&
+      !DELETED_DUMMY_TENANT_IDS.has(profile.tenantId),
+  );
 
   // 1. Fetch all active team memberships in a single bulk query (instant, no N+1 query loop)
   let allActiveMemberships: Array<{

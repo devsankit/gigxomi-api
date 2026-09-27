@@ -787,10 +787,21 @@ export function listAgencyListingsFromFile() {
 }
 
 export function listPublicAgencyListingsFromFile() {
+  const DELETED_DUMMY_SLUGS = new Set(["gigxomi-studio", "omni-flow-studio", "editors-hub"]);
+  const DELETED_DUMMY_TENANT_IDS = new Set(["tenant-gigxomi", "tenant-omni-flow", "tenant-editors-hub"]);
+
   return withStore(
     (store) =>
       store.profiles
-        .filter((profile) => profile.status === "Active" && profile.isSetupComplete && profile.isPublished)
+        .filter(
+          (profile) =>
+            profile.status === "Active" &&
+            profile.isSetupComplete &&
+            profile.isPublished &&
+            !DELETED_DUMMY_SLUGS.has(profile.slug) &&
+            !DELETED_DUMMY_TENANT_IDS.has(profile.id) &&
+            !DELETED_DUMMY_TENANT_IDS.has(profile.tenantId),
+        )
         .sort((left, right) => {
           if (left.reputation.score !== right.reputation.score) {
             return right.reputation.score - left.reputation.score;
