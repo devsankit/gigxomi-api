@@ -314,7 +314,7 @@ export async function GET(request: Request) {
       teamMembers = profile.showcaseEditors.map((e) => ({
         name: e.displayName || e.publicAlias,
         role: e.specialties?.[0] || "In-house Video Editor",
-        avatarUrl: getEditorAvatar(e.avatarUrl, e.displayName || e.publicAlias),
+        avatarUrl: getEditorAvatar(null, e.displayName || e.publicAlias, e.editorId),
       }));
     }
 
