@@ -49,7 +49,16 @@ function absoluteAssetUrl(value: string | null | undefined, request: Request) {
   }
 }
 
+const KNOWN_AGENCY_DOMAINS: Record<string, string> = {
+  "apex-motion": "https://apexmotion.studio",
+  "two-edits": "https://twoedits.com",
+};
+
 function absoluteWebsiteUrl(value: string | undefined, slug: string) {
+  if (KNOWN_AGENCY_DOMAINS[slug]) {
+    return KNOWN_AGENCY_DOMAINS[slug];
+  }
+
   const trimmed = value?.trim();
   if (trimmed && !trimmed.includes("example.com")) {
     try {
@@ -221,86 +230,131 @@ export async function GET(request: Request) {
       .map(profileFromAgencyAccount),
   ];
 
-  // Aggregate live freelancer / team membership counts from Prisma for each agency
-  const agencies = await Promise.all(
-    directoryProfiles.map(async (profile) => {
-      let liveMemberships: Array<{ freelancerName: string }> = [];
-      try {
-        liveMemberships = await (prisma as any).appTeamMembership.findMany({
-          where: {
-            OR: [
-              { tenantId: profile.id },
-              { agencyName: { equals: profile.publicName, mode: "insensitive" } },
-            ],
-            status: "ACTIVE",
-          },
-          select: { freelancerName: true },
-          take: 5,
-        });
-      } catch (err) {
-        // Fall back gracefully if DB table or query encounters an error
-      }
+  // 1. Fetch all active team memberships in a single bulk query (instant, no N+1 query loop)
+  let allActiveMemberships: Array<{
+    tenantId: string;
+    agencyName: string;
+    freelancerName: string;
+    roleType: string;
+  }> = [];
 
-      const activeFreelancersCount = Math.max(
-        liveMemberships.length,
-        profile.stats.activeEditors || 0,
+  try {
+    allActiveMemberships = await (prisma as any).appTeamMembership.findMany({
+      where: { status: "ACTIVE" },
+      select: {
+        tenantId: true,
+        agencyName: true,
+        freelancerName: true,
+        roleType: true,
+      },
+    });
+  } catch {
+    allActiveMemberships = [];
+  }
+
+  const agencies = directoryProfiles.map((profile) => {
+    // Find matching active members from DB
+    const matchedMembers = allActiveMemberships.filter((m) => {
+      const tenantMatch = Boolean(
+        (profile.id && m.tenantId === profile.id) ||
+        (profile.tenantId && m.tenantId === profile.tenantId)
       );
+      const nameMatch = Boolean(
+        m.agencyName &&
+        profile.publicName &&
+        m.agencyName.trim().toLowerCase() === profile.publicName.trim().toLowerCase()
+      );
+      return tenantMatch || nameMatch;
+    });
 
-      // Extract editor initials for the visual "Team signal" circles
-      let editorInitials: string[] = [];
-      if (liveMemberships.length > 0) {
-        editorInitials = liveMemberships.map((m) =>
-          m.freelancerName
-            .split(/\s+/)
-            .filter(Boolean)
-            .map((w) => w[0])
-            .join("")
-            .slice(0, 2)
-            .toUpperCase(),
-        );
-      } else if (profile.showcaseEditors && profile.showcaseEditors.length > 0) {
-        editorInitials = profile.showcaseEditors.slice(0, 5).map((editor) =>
-          editor.publicAlias.replace(/[^a-z0-9]/gi, "").slice(-2).toUpperCase(),
-        );
-      } else {
-        editorInitials = ["01", "64", "42"];
-      }
+    const dbActiveCount = matchedMembers.length;
+    const seedActiveCount = profile.stats?.activeEditors || 0;
+    const activeFreelancersCount = Math.max(dbActiveCount, seedActiveCount);
 
-      return {
-        id: profile.id,
-        slug: profile.slug,
-        name: profile.publicName,
-        mark: profile.publicName
+    // Build active team members detail list
+    let teamMembers: Array<{ name: string; role: string }> = [];
+    if (matchedMembers.length > 0) {
+      teamMembers = matchedMembers.map((m) => ({
+        name: m.freelancerName,
+        role: m.roleType || "In-house Video Editor",
+      }));
+    } else if (profile.showcaseEditors && profile.showcaseEditors.length > 0) {
+      teamMembers = profile.showcaseEditors.map((e) => ({
+        name: e.displayName || e.publicAlias,
+        role: e.specialties?.[0] || "In-house Video Editor",
+      }));
+    }
+
+    // Extract editor initials for avatar signals
+    let editorInitials: string[] = [];
+    if (teamMembers.length > 0) {
+      editorInitials = teamMembers.slice(0, 5).map((m) =>
+        m.name
           .split(/\s+/)
           .filter(Boolean)
-          .map((word) => word[0])
+          .map((w) => w[0])
           .join("")
           .slice(0, 2)
           .toUpperCase(),
-        location: profile.office.city || profile.office.country || "Remote",
-        city: profile.office.city || "",
-        state: profile.office.state || "",
-        country: profile.office.country || "India",
-        specialty: profile.niche || profile.tagline || "Video editing and creative production",
-        tagline: profile.tagline || "",
-        description: profile.description || profile.tagline || "A published creative team on the GigXomi network.",
-        freelancersCount: activeFreelancersCount,
-        editors: `${activeFreelancersCount} active editor${activeFreelancersCount === 1 ? "" : "s"}`,
-        editorInitials,
-        status: profile.hiringStatus || "Selective hiring",
-        website: absoluteWebsiteUrl(profile.websiteUrl, profile.slug),
-        whatsappNumber: profile.whatsappNumber || null,
-        contactEmail: profile.contactEmail || null,
-        logoUrl: absoluteAssetUrl(profile.logoUrl, request),
-        coverUrl: absoluteAssetUrl(profile.coverUrl, request),
-        stats: {
-          averageRating: profile.stats.averageRating || 5,
-          reviewCount: profile.stats.reviewCount || 0,
-          completedOrders: profile.stats.completedOrders || 0,
-        },
-      };
-    }),
-  );
+      );
+    } else {
+      editorInitials = [];
+    }
+
+    const website = absoluteWebsiteUrl(profile.websiteUrl, profile.slug);
+    const agencyStudioUrl = `https://agency.gigxomi.com/${encodeURIComponent(profile.slug)}`;
+    const publicProfileUrl = `https://www.gigxomi.com/agency/${encodeURIComponent(profile.slug)}`;
+
+    return {
+      id: profile.id,
+      tenantId: profile.tenantId || profile.id,
+      slug: profile.slug,
+      name: profile.publicName,
+      mark: profile.publicName
+        .split(/\s+/)
+        .filter(Boolean)
+        .map((word) => word[0])
+        .join("")
+        .slice(0, 2)
+        .toUpperCase(),
+      location: profile.office.city || profile.office.country || "Remote",
+      city: profile.office.city || "",
+      state: profile.office.state || "",
+      country: profile.office.country || "India",
+      specialty: profile.niche || profile.tagline || "Video editing and creative production",
+      tagline: profile.tagline || "",
+      description: profile.description || profile.tagline || "A published creative team on the GigXomi network.",
+
+      // Active team members count & details
+      activeTeamMembers: activeFreelancersCount,
+      activeTeamMembersCount: activeFreelancersCount,
+      totalTeamMembers: activeFreelancersCount,
+      freelancersCount: activeFreelancersCount,
+      editors: activeFreelancersCount === 0 ? "0 active editors" : `${activeFreelancersCount} active editor${activeFreelancersCount === 1 ? "" : "s"}`,
+      teamMembers,
+      editorInitials,
+
+      status: profile.hiringStatus || "Selective hiring",
+
+      // Website links & profiles
+      website,
+      websiteUrl: website,
+      websiteLink: website,
+      agencyStudioUrl,
+      publicProfileUrl,
+
+      whatsappNumber: profile.whatsappNumber || null,
+      contactEmail: profile.contactEmail || null,
+      logoUrl: absoluteAssetUrl(profile.logoUrl, request),
+      coverUrl: absoluteAssetUrl(profile.coverUrl, request),
+      stats: {
+        averageRating: profile.stats.averageRating || 5,
+        reviewCount: profile.stats.reviewCount || 0,
+        completedOrders: profile.stats.completedOrders || 0,
+        activeEditors: activeFreelancersCount,
+      },
+    };
+  });
 
   let filteredAgencies = agencies;
   if (filterCity) {
