@@ -1,0 +1,334 @@
+import { NextResponse } from "next/server";
+
+import { listPublicAgencyListingsFromFile } from "@/lib/gigxomi/agency-listing-store";
+import type { AgencyListingProfile } from "@/lib/gigxomi/agency-listing-types";
+import { checkTeamPortfolioRateLimit } from "@/lib/api/rate-limit";
+import { prisma } from "@/lib/prisma";
+
+export const dynamic = "force-dynamic";
+
+const ALLOWED_ORIGINS = [
+  "https://gigxomi.com",
+  "https://www.gigxomi.com",
+  "https://app.gigxomi.com",
+  "https://agency.gigxomi.com",
+  "http://localhost:3000",
+  "http://localhost:3002",
+  "http://localhost:3020",
+];
+
+function getCorsHeaders(request: Request): Record<string, string> {
+  const origin = request.headers.get("origin") || "";
+  const isAllowed = ALLOWED_ORIGINS.includes(origin);
+
+  return {
+    "Access-Control-Allow-Origin": isAllowed ? origin : "*",
+    "Vary": "Origin",
+    "Access-Control-Allow-Methods": "GET, OPTIONS",
+    "Access-Control-Allow-Headers": "Authorization, X-Api-Key, Content-Type, Accept",
+    "Access-Control-Max-Age": "86400",
+  };
+}
+
+export async function OPTIONS(request: Request) {
+  return new NextResponse(null, {
+    status: 204,
+    headers: getCorsHeaders(request),
+  });
+}
+
+function absoluteAssetUrl(value: string | null | undefined, request: Request) {
+  const trimmed = value?.trim();
+  if (!trimmed) return null;
+
+  try {
+    const assetUrl = new URL(trimmed, new URL(request.url).origin);
+    return assetUrl.protocol === "http:" || assetUrl.protocol === "https:" ? assetUrl.toString() : null;
+  } catch {
+    return null;
+  }
+}
+
+function absoluteWebsiteUrl(value: string | undefined, slug: string) {
+  const trimmed = value?.trim();
+  if (trimmed && !trimmed.includes("example.com")) {
+    try {
+      const websiteUrl = new URL(/^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`);
+      if (websiteUrl.protocol === "http:" || websiteUrl.protocol === "https:") {
+        return websiteUrl.toString();
+      }
+    } catch {
+      // Fall through to default template
+    }
+  }
+
+  return `https://agency.gigxomi.com/${encodeURIComponent(slug)}`;
+}
+
+function extractApiKey(request: Request): string | null {
+  const headerKey = request.headers.get("x-api-key");
+  if (headerKey?.trim()) return headerKey.trim();
+
+  const authHeader = request.headers.get("authorization");
+  if (authHeader && typeof authHeader === "string") {
+    const [scheme, ...rest] = authHeader.trim().split(/\s+/);
+    if (scheme?.toLowerCase() === "bearer") {
+      return rest.join(" ").trim() || null;
+    }
+  }
+  return null;
+}
+
+function slugify(value: string) {
+  return value.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") || "agency";
+}
+
+function profileFromAgencyAccount(account: {
+  id: string;
+  tenantId: string | null;
+  displayName: string;
+  packageStatus: "ACTIVE" | "PAUSED" | "EXPIRED" | null;
+  createdAt: Date;
+}): AgencyListingProfile {
+  const publicName = account.displayName.trim() || "GigXomi agency";
+  const slug = `${slugify(publicName)}-${account.id.slice(-6).toLowerCase()}`;
+  const isExpired = account.packageStatus === "EXPIRED";
+  const updatedAt = account.createdAt.toISOString();
+
+  return {
+    id: account.tenantId || account.id,
+    tenantId: account.tenantId || account.id,
+    slug,
+    publicName,
+    ownerName: publicName,
+    whatsappNumber: "",
+    contactEmail: "",
+    websiteUrl: `https://agency.gigxomi.com/${encodeURIComponent(slug)}`,
+    logoUrl: null,
+    coverUrl: null,
+    tagline: "Video editing and creative production",
+    description: "This agency is part of the GigXomi network. Their public profile is being completed by the agency team.",
+    niche: "Video editing and creative production",
+    categories: ["Video editing"],
+    specialties: ["Video editing", "Creative production"],
+    ctaLabel: "View agency profile",
+    status: isExpired ? "Suspended" : "Active",
+    hiringStatus: account.packageStatus === "ACTIVE" ? "Selective hiring" : "Invite only",
+    office: {
+      city: "Remote",
+      state: "",
+      country: "India",
+      hasOffice: false,
+      officeVerified: false,
+      isAddressPublic: false,
+      publicOfficeAddress: "",
+      officeHours: "By appointment",
+    },
+    signals: {
+      responseSlaMinutes: 0,
+      completionRate: 0,
+      reviewRating: 0,
+      repeatClientPercent: 0,
+      disputePenalty: 0,
+      inactivityPenalty: 0,
+      nonResponsivePenalty: 0,
+    },
+    stats: {
+      completedOrders: 0,
+      averageRating: 0,
+      reviewCount: 0,
+      repeatClientPercent: 0,
+      responseSlaMinutes: 0,
+      activeEditors: 0,
+      openOpportunities: 0,
+    },
+    reputation: {
+      score: 0,
+      band: "At Risk",
+      reasons: [],
+      lastCalculatedAt: updatedAt,
+    },
+    reviews: [],
+    showcaseEditors: [],
+    serviceOffers: [],
+    publishStage: "PUBLISHED",
+    completionPercent: 0,
+    isSetupComplete: false,
+    isPublished: true,
+    createdAt: updatedAt,
+    updatedAt,
+  };
+}
+
+export async function GET(request: Request) {
+  const corsHeaders = getCorsHeaders(request);
+  const rateLimitKey = `public-agencies:${request.headers.get("x-forwarded-for") || "direct"}`;
+  const rateLimit = checkTeamPortfolioRateLimit(rateLimitKey);
+  if (!rateLimit.allowed) {
+    return NextResponse.json(
+      { ok: false, error: "Too many requests. Please try again later." },
+      { status: 429, headers: corsHeaders },
+    );
+  }
+
+  const { searchParams } = new URL(request.url);
+  const rawLimit = searchParams.get("limit");
+  const limit = rawLimit ? Math.min(Math.max(parseInt(rawLimit, 10) || 20, 1), 100) : 20;
+  const filterCity = searchParams.get("city")?.trim().toLowerCase();
+  const filterSpecialty = searchParams.get("specialty")?.trim().toLowerCase();
+  const searchQuery = searchParams.get("q")?.trim().toLowerCase();
+
+  const profiles = await listPublicAgencyListingsFromFile();
+  let agencyAccounts: Array<Parameters<typeof profileFromAgencyAccount>[0]> = [];
+
+  try {
+    agencyAccounts = await prisma.appAuthUser.findMany({
+      where: {
+        NOT: { role: "SUPER_ADMIN" },
+        OR: [
+          { packageAudience: "AGENCY" },
+          { workspaceMode: "AGENCY" },
+          { role: "ADMIN" },
+          { assignedRole: "ADMIN" },
+        ],
+      },
+      select: {
+        id: true,
+        tenantId: true,
+        displayName: true,
+        packageStatus: true,
+        createdAt: true,
+      },
+      orderBy: { createdAt: "desc" },
+    });
+  } catch {
+    agencyAccounts = [];
+  }
+
+  const publishedTenantIds = new Set(profiles.map((profile) => profile.tenantId));
+  const directoryProfiles = [
+    ...profiles,
+    ...agencyAccounts
+      .filter((account) => !publishedTenantIds.has(account.tenantId || account.id))
+      .map(profileFromAgencyAccount),
+  ];
+
+  // Aggregate live freelancer / team membership counts from Prisma for each agency
+  const agencies = await Promise.all(
+    directoryProfiles.map(async (profile) => {
+      let liveMemberships: Array<{ freelancerName: string }> = [];
+      try {
+        liveMemberships = await (prisma as any).appTeamMembership.findMany({
+          where: {
+            OR: [
+              { tenantId: profile.id },
+              { agencyName: { equals: profile.publicName, mode: "insensitive" } },
+            ],
+            status: "ACTIVE",
+          },
+          select: { freelancerName: true },
+          take: 5,
+        });
+      } catch (err) {
+        // Fall back gracefully if DB table or query encounters an error
+      }
+
+      const activeFreelancersCount = Math.max(
+        liveMemberships.length,
+        profile.stats.activeEditors || 0,
+      );
+
+      // Extract editor initials for the visual "Team signal" circles
+      let editorInitials: string[] = [];
+      if (liveMemberships.length > 0) {
+        editorInitials = liveMemberships.map((m) =>
+          m.freelancerName
+            .split(/\s+/)
+            .filter(Boolean)
+            .map((w) => w[0])
+            .join("")
+            .slice(0, 2)
+            .toUpperCase(),
+        );
+      } else if (profile.showcaseEditors && profile.showcaseEditors.length > 0) {
+        editorInitials = profile.showcaseEditors.slice(0, 5).map((editor) =>
+          editor.publicAlias.replace(/[^a-z0-9]/gi, "").slice(-2).toUpperCase(),
+        );
+      } else {
+        editorInitials = ["01", "64", "42"];
+      }
+
+      return {
+        id: profile.id,
+        slug: profile.slug,
+        name: profile.publicName,
+        mark: profile.publicName
+          .split(/\s+/)
+          .filter(Boolean)
+          .map((word) => word[0])
+          .join("")
+          .slice(0, 2)
+          .toUpperCase(),
+        location: profile.office.city || profile.office.country || "Remote",
+        city: profile.office.city || "",
+        state: profile.office.state || "",
+        country: profile.office.country || "India",
+        specialty: profile.niche || profile.tagline || "Video editing and creative production",
+        tagline: profile.tagline || "",
+        description: profile.description || profile.tagline || "A published creative team on the GigXomi network.",
+        freelancersCount: activeFreelancersCount,
+        editors: `${activeFreelancersCount} active editor${activeFreelancersCount === 1 ? "" : "s"}`,
+        editorInitials,
+        status: profile.hiringStatus || "Selective hiring",
+        website: absoluteWebsiteUrl(profile.websiteUrl, profile.slug),
+        whatsappNumber: profile.whatsappNumber || null,
+        logoUrl: absoluteAssetUrl(profile.logoUrl, request),
+        coverUrl: absoluteAssetUrl(profile.coverUrl, request),
+        stats: {
+          averageRating: profile.stats.averageRating || 5,
+          reviewCount: profile.stats.reviewCount || 0,
+          completedOrders: profile.stats.completedOrders || 0,
+        },
+      };
+    }),
+  );
+
+  let filteredAgencies = agencies;
+  if (filterCity) {
+    filteredAgencies = filteredAgencies.filter(
+      (a) => a.city.toLowerCase().includes(filterCity) || a.location.toLowerCase().includes(filterCity),
+    );
+  }
+  if (filterSpecialty) {
+    filteredAgencies = filteredAgencies.filter(
+      (a) => a.specialty.toLowerCase().includes(filterSpecialty) || a.tagline.toLowerCase().includes(filterSpecialty),
+    );
+  }
+  if (searchQuery) {
+    filteredAgencies = filteredAgencies.filter(
+      (a) =>
+        a.name.toLowerCase().includes(searchQuery) ||
+        a.specialty.toLowerCase().includes(searchQuery) ||
+        a.location.toLowerCase().includes(searchQuery) ||
+        a.tagline.toLowerCase().includes(searchQuery),
+    );
+  }
+
+  const paginatedAgencies = filteredAgencies.slice(0, limit);
+
+  return NextResponse.json(
+    {
+      ok: true,
+      count: paginatedAgencies.length,
+      total: filteredAgencies.length,
+      source: "registered-agencies-live",
+      agencies: paginatedAgencies,
+    },
+    {
+      headers: {
+        ...corsHeaders,
+        "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+      },
+    },
+  );
+}
