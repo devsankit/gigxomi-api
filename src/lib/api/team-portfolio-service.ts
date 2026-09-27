@@ -1,6 +1,7 @@
 import "server-only";
 
 import { prisma } from "@/lib/prisma";
+import { getEditorAvatar } from "@/lib/gigxomi/editor-avatar";
 
 export type VideoOrientation = "portrait" | "landscape" | "square";
 export type VideoAspectRatio = "9:16" | "16:9" | "1:1";
@@ -251,10 +252,11 @@ export async function getAgencyTeamPortfolio(
       cleanText(profile.name) ||
       "Creative Editor";
 
-    const avatarUrl =
-      cleanText(profile.avatarUrl) ||
-      cleanText(membershipMeta.avatarUrl) ||
-      `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=101827&color=D7FF2F&bold=true`;
+    const avatarUrl = getEditorAvatar(
+      cleanText(profile.avatarUrl) || cleanText(membershipMeta.avatarUrl),
+      displayName,
+      membership.freelancerId
+    );
 
     const profession = cleanText(profile.profession) || cleanText(membership.roleType) || "Video Editor";
     const bio = cleanText(profile.bio) || cleanText(membershipMeta.bio) || "Professional Video Editor specializing in high-engagement video content.";

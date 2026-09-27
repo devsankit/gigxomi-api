@@ -4,6 +4,7 @@ import { listPublicAgencyListingsFromFile } from "@/lib/gigxomi/agency-listing-s
 import type { AgencyListingProfile } from "@/lib/gigxomi/agency-listing-types";
 import { checkTeamPortfolioRateLimit } from "@/lib/api/rate-limit";
 import { prisma } from "@/lib/prisma";
+import { getEditorAvatar } from "@/lib/gigxomi/editor-avatar";
 
 export const dynamic = "force-dynamic";
 
@@ -301,22 +302,25 @@ export async function GET(request: Request) {
     const seedActiveCount = profile.stats?.activeEditors || 0;
     const activeFreelancersCount = Math.max(dbActiveCount, seedActiveCount);
 
-    // Build active team members detail list
-    let teamMembers: Array<{ name: string; role: string }> = [];
+    // Build active team members detail list with handsome character avatars
+    let teamMembers: Array<{ name: string; role: string; avatarUrl: string }> = [];
     if (matchedMembers.length > 0) {
       teamMembers = matchedMembers.map((m) => ({
         name: m.freelancerName,
         role: m.roleType || "In-house Video Editor",
+        avatarUrl: getEditorAvatar(null, m.freelancerName),
       }));
     } else if (profile.showcaseEditors && profile.showcaseEditors.length > 0) {
       teamMembers = profile.showcaseEditors.map((e) => ({
         name: e.displayName || e.publicAlias,
         role: e.specialties?.[0] || "In-house Video Editor",
+        avatarUrl: getEditorAvatar(e.avatarUrl, e.displayName || e.publicAlias),
       }));
     }
 
-    // Extract editor initials for avatar signals
+    // Extract editor initials and avatars for visual preview pills
     let editorInitials: string[] = [];
+    let editorAvatars: string[] = [];
     if (teamMembers.length > 0) {
       editorInitials = teamMembers.slice(0, 5).map((m) =>
         m.name
@@ -327,8 +331,10 @@ export async function GET(request: Request) {
           .slice(0, 2)
           .toUpperCase(),
       );
+      editorAvatars = teamMembers.slice(0, 5).map((m) => m.avatarUrl);
     } else {
       editorInitials = [];
+      editorAvatars = [];
     }
 
     const website = absoluteWebsiteUrl(profile.websiteUrl, profile.slug);
@@ -363,6 +369,7 @@ export async function GET(request: Request) {
       editors: activeFreelancersCount === 0 ? "0 active editors" : `${activeFreelancersCount} active editor${activeFreelancersCount === 1 ? "" : "s"}`,
       teamMembers,
       editorInitials,
+      editorAvatars,
 
       status: profile.hiringStatus || "Selective hiring",
 

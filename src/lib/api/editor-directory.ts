@@ -2,6 +2,7 @@ import { parseInHouseSettings } from "@/lib/team/inhouse-editor-policy";
 import "server-only";
 import { prisma } from "@/lib/prisma";
 import { parseMediaUrls, isYouTubeOrInstagramUrl } from "@/lib/gigxomi/media";
+import { getEditorAvatar } from "@/lib/gigxomi/editor-avatar";
 
 // Only public media URLs leave the directory. Never expose arbitrary schemes or credentials.
 export function isPublicMediaUrl(value: string) {
@@ -311,7 +312,11 @@ export async function loadEditors(tenantId: string, editorId?: string) {
         text(profile.bio) ||
         editorProfile?.bio ||
         "Experienced Video Editor specializing in high-retention Reels, Shorts, YouTube edits, and Color Grading.",
-      avatarUrl: publicMediaUrl(text(profile.profileImageUrl)) || publicMediaUrl(editorProfile?.avatarUrl || "") || null,
+      avatarUrl: getEditorAvatar(
+        publicMediaUrl(text(profile.profileImageUrl)) || publicMediaUrl(editorProfile?.avatarUrl || ""),
+        text(profile.displayName) || text(profile.fullName) || user.displayName || "Video Editor",
+        user.id
+      ),
       verificationStatus: text(record(user.freelancerWorkspace?.verification).status) || "VERIFIED",
       karmaScore: number(profile.karmaScore) || calculatedTrust || 90,
       trustScore: calculatedTrust || 90,
