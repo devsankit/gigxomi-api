@@ -245,8 +245,33 @@ export async function GET(request: Request) {
     agencyAccounts = [];
   }
 
-  const DELETED_DUMMY_SLUGS = new Set(["gigxomi-studio", "omni-flow-studio", "editors-hub"]);
-  const DELETED_DUMMY_TENANT_IDS = new Set(["tenant-gigxomi", "tenant-omni-flow", "tenant-editors-hub"]);
+  const DELETED_DUMMY_SLUGS = new Set([
+    "gigxomi-studio",
+    "omni-flow-studio",
+    "editors-hub",
+    "ankit-rathore",
+    "priya",
+  ]);
+  const DELETED_DUMMY_TENANT_IDS = new Set([
+    "tenant-gigxomi",
+    "tenant-omni-flow",
+    "tenant-editors-hub",
+    "tenant-agency-6fe5fe4a",
+    "tenant-agency-ba9e2b31",
+    "tenant-agency-0dda8089",
+    "tenant-agency-889481bd",
+    "tenant-agency-76a43d28",
+    "tenant-agency-f67b9229",
+    "tenant-agency-05d5f8eb",
+    "tenant-agency-84c8fef8",
+    "user-agency-aeab1c1e",
+    "user-admin-d6d485ce",
+    "user-admin-ce6dbf7e",
+  ]);
+  const DELETED_NAMES = new Set([
+    "ankit rathore",
+    "priya",
+  ]);
 
   const publishedTenantIds = new Set(profiles.map((profile) => profile.tenantId));
   const directoryProfiles = [
@@ -258,7 +283,8 @@ export async function GET(request: Request) {
     (profile) =>
       !DELETED_DUMMY_SLUGS.has(profile.slug) &&
       !DELETED_DUMMY_TENANT_IDS.has(profile.id) &&
-      !DELETED_DUMMY_TENANT_IDS.has(profile.tenantId),
+      !DELETED_DUMMY_TENANT_IDS.has(profile.tenantId) &&
+      !DELETED_NAMES.has((profile.publicName || "").trim().toLowerCase()),
   );
 
   // 1. Fetch all active team memberships in a single bulk query (instant, no N+1 query loop)
@@ -382,7 +408,8 @@ export async function GET(request: Request) {
 
       whatsappNumber: profile.whatsappNumber || null,
       contactEmail: profile.contactEmail || null,
-      logoUrl: absoluteAssetUrl(profile.logoUrl, request) || getAgencyFallbackLogo(profile.publicName),
+      logoUrl: absoluteAssetUrl(profile.logoUrl, request) || null,
+      fallbackLogoUrl: getAgencyFallbackLogo(profile.publicName),
       coverUrl: absoluteAssetUrl(profile.coverUrl, request) || getAgencyFallbackCover(profile.slug),
       rawLogoUrl: profile.logoUrl || null,
       rawCoverUrl: profile.coverUrl || null,
