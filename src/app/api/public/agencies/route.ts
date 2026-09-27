@@ -87,6 +87,8 @@ function profileFromAgencyAccount(account: {
   id: string;
   tenantId: string | null;
   displayName: string;
+  phone?: string | null;
+  email?: string | null;
   packageStatus: "ACTIVE" | "PAUSED" | "EXPIRED" | null;
   createdAt: Date;
 }): AgencyListingProfile {
@@ -94,6 +96,10 @@ function profileFromAgencyAccount(account: {
   const slug = `${slugify(publicName)}-${account.id.slice(-6).toLowerCase()}`;
   const isExpired = account.packageStatus === "EXPIRED";
   const updatedAt = account.createdAt.toISOString();
+  const rawPhone = account.phone?.trim() || "";
+  const isValidPhone = rawPhone && !rawPhone.startsWith("+google-") && !rawPhone.startsWith("+email-");
+  const whatsappNumber = isValidPhone ? rawPhone : "";
+  const contactEmail = account.email?.trim() || "";
 
   return {
     id: account.tenantId || account.id,
@@ -101,8 +107,8 @@ function profileFromAgencyAccount(account: {
     slug,
     publicName,
     ownerName: publicName,
-    whatsappNumber: "",
-    contactEmail: "",
+    whatsappNumber,
+    contactEmail,
     websiteUrl: `https://agency.gigxomi.com/${encodeURIComponent(slug)}`,
     logoUrl: null,
     coverUrl: null,
@@ -196,6 +202,8 @@ export async function GET(request: Request) {
         id: true,
         tenantId: true,
         displayName: true,
+        phone: true,
+        email: true,
         packageStatus: true,
         createdAt: true,
       },
@@ -282,6 +290,7 @@ export async function GET(request: Request) {
         status: profile.hiringStatus || "Selective hiring",
         website: absoluteWebsiteUrl(profile.websiteUrl, profile.slug),
         whatsappNumber: profile.whatsappNumber || null,
+        contactEmail: profile.contactEmail || null,
         logoUrl: absoluteAssetUrl(profile.logoUrl, request),
         coverUrl: absoluteAssetUrl(profile.coverUrl, request),
         stats: {

@@ -54,6 +54,24 @@ export async function GET() {
     igConn.status === "Connected"
   );
 
+  let activeFreelancersCount = 0;
+  try {
+    activeFreelancersCount = await (prisma as any).appTeamMembership.count({
+      where: {
+        OR: [
+          { tenantId },
+          { agencyName: { equals: profile.publicName, mode: "insensitive" } },
+        ],
+        status: "ACTIVE",
+      },
+    });
+  } catch {
+    // fallback
+  }
+
+  const liveFreelancersCount = Math.max(activeFreelancersCount, profile.stats?.activeEditors || 0);
+  const defaultWebsiteUrl = `https://agency.gigxomi.com/${encodeURIComponent(profile.slug)}`;
+
   return NextResponse.json({
     ok: true,
     completed: profile.isSetupComplete,
@@ -66,7 +84,16 @@ export async function GET() {
     hasInstagram: isInstagramConnected,
     hasWhatsAppPhone: Boolean(profile.whatsappNumber || waConn?.phoneNumber),
     hasInstagramDraft: Boolean(igConn?.username),
-    profile,
+    freelancersCount: liveFreelancersCount,
+    defaultWebsiteUrl,
+    profile: {
+      ...profile,
+      websiteUrl: profile.websiteUrl || defaultWebsiteUrl,
+      stats: {
+        ...profile.stats,
+        activeEditors: liveFreelancersCount,
+      },
+    },
   });
 }
 
@@ -129,7 +156,9 @@ export async function POST(request: Request) {
     slug: String(body.slug ?? "").trim(),
     contactEmail: String(body.contactEmail ?? authorization.session.email ?? "").trim(),
     whatsappNumber: String(body.whatsappNumber ?? authorization.session.phone ?? "").trim(),
-    websiteUrl: body.websiteUrl !== undefined ? String(body.websiteUrl).trim() : undefined,
+    websiteUrl: body.websiteUrl !== undefined && String(body.websiteUrl).trim()
+      ? String(body.websiteUrl).trim()
+      : `https://agency.gigxomi.com/${encodeURIComponent(String(body.slug ?? "").trim())}`,
     instagramHandle: body.instagramHandle !== undefined ? String(body.instagramHandle).trim() : undefined,
     logoUrl: body.logoUrl == null ? null : String(body.logoUrl).trim(),
     coverUrl: body.coverUrl == null ? null : String(body.coverUrl).trim(),

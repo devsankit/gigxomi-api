@@ -145,11 +145,11 @@ export async function getAgencyTeamPortfolio(
   // AppAuthUser/AppTeamMembership tenancy model; the legacy Tenant table is
   // not populated for these workspaces.
   const agencyUser = await (prisma as any).appAuthUser.findFirst({
+    // The route has already authenticated the principal and resolved the
+    // tenant. Some older agency-manager records predate the package metadata
+    // fields, so do not make the response depend on those nullable columns.
     where: {
       tenantId: cleanTenantId,
-      packageAudience: "AGENCY",
-      workspaceMode: "AGENCY",
-      packageStatus: "ACTIVE",
       role: { in: ["ADMIN", "MANAGER"] },
     },
     select: { id: true, displayName: true },
