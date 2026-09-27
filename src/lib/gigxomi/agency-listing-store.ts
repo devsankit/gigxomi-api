@@ -888,3 +888,16 @@ export function getAgencyListingsForFreelancerFromFile() {
     return store.profiles.filter((profile) => relevantAgencyIds.includes(profile.tenantId));
   }, { persist: false });
 }
+
+export function deleteAgencyListingFromFile(tenantId: string) {
+  return withStore((store) => {
+    const index = store.profiles.findIndex(
+      (profile) => profile.tenantId === tenantId || profile.id === tenantId
+    );
+    if (index >= 0) {
+      const [deleted] = store.profiles.splice(index, 1);
+      return deleted;
+    }
+    return null;
+  });
+}
