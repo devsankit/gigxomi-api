@@ -54,6 +54,28 @@ const KNOWN_AGENCY_DOMAINS: Record<string, string> = {
   "two-edits": "https://twoedits.com",
 };
 
+const CURATED_STUDIO_COVERS = [
+  "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=1200&auto=format&fit=crop&q=80",
+  "https://images.unsplash.com/photo-1536240478700-b869070f9279?w=1200&auto=format&fit=crop&q=80",
+  "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&auto=format&fit=crop&q=80",
+  "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=1200&auto=format&fit=crop&q=80",
+  "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&auto=format&fit=crop&q=80",
+  "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=80",
+];
+
+function getAgencyFallbackCover(slug: string): string {
+  let hash = 0;
+  for (let i = 0; i < slug.length; i++) {
+    hash = (hash << 5) - hash + slug.charCodeAt(i);
+    hash |= 0;
+  }
+  return CURATED_STUDIO_COVERS[Math.abs(hash) % CURATED_STUDIO_COVERS.length];
+}
+
+function getAgencyFallbackLogo(name: string): string {
+  return `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name.trim())}&backgroundColor=0f172a,1e293b,111827&textColor=d7ff2f,38bdf8,818cf8`;
+}
+
 function absoluteWebsiteUrl(value: string | undefined, slug: string) {
   if (KNOWN_AGENCY_DOMAINS[slug]) {
     return KNOWN_AGENCY_DOMAINS[slug];
@@ -345,8 +367,12 @@ export async function GET(request: Request) {
 
       whatsappNumber: profile.whatsappNumber || null,
       contactEmail: profile.contactEmail || null,
-      logoUrl: absoluteAssetUrl(profile.logoUrl, request),
-      coverUrl: absoluteAssetUrl(profile.coverUrl, request),
+      logoUrl: absoluteAssetUrl(profile.logoUrl, request) || getAgencyFallbackLogo(profile.publicName),
+      coverUrl: absoluteAssetUrl(profile.coverUrl, request) || getAgencyFallbackCover(profile.slug),
+      rawLogoUrl: profile.logoUrl || null,
+      rawCoverUrl: profile.coverUrl || null,
+      hasCustomLogo: Boolean(profile.logoUrl),
+      hasCustomCover: Boolean(profile.coverUrl),
       stats: {
         averageRating: profile.stats.averageRating || 5,
         reviewCount: profile.stats.reviewCount || 0,
