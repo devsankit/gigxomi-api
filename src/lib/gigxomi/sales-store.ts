@@ -623,9 +623,9 @@ function maskContact(value: string) {
 function maskOpenPoolItem(item: SalesLeadPoolView) {
   return {
     ...item,
-    customerPhone: maskContact(item.customerPhone),
-    customerEmail: maskContact(item.customerEmail),
-    notes: item.notes ? "Claim this lead to unlock full notes." : "",
+    customerPhone: item.customerPhone,
+    customerEmail: item.customerEmail,
+    notes: item.notes || "Available lead from queue.",
   };
 }
 
@@ -1082,13 +1082,6 @@ export async function getSalesSnapshotForRole(session: { userId?: string | null;
       ? leadPool
       : currentAgent
         ? leadPool
-            .filter(
-              (item) =>
-                (item.status === "OPEN" && (!item.assignedAgentId || item.assignedAgentId === currentAgent.id)) ||
-                item.claimedByAgentId === currentAgent.id ||
-                Boolean(item.claimedByAgentId && visibleAgentIds.has(item.claimedByAgentId)),
-            )
-            .map((item) => (item.status === "OPEN" && item.claimedByAgentId !== currentAgent.id ? maskOpenPoolItem(item) : item))
         : [];
   const visibleLeads = leads.filter((lead) => visibleAgentIds.has(lead.assignedAgentId));
   const visibleDeals = deals.filter((deal) => visibleAgentIds.has(deal.agentId));

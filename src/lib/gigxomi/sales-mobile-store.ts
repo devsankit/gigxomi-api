@@ -102,14 +102,59 @@ export async function getSalesMobileBootstrap(actor: SalesMobileActor) {
   // arrive after a lead was assigned. This is idempotent and scoped to the
   // current agent, so CRM never broadens its inbox to unassigned threads.
   await syncSalesAgentConversationLinks(agent.id);
-  const [snapshot, devices, calls, pendingNotes, pendingUploads] = await Promise.all([
+  const [snapshot, devices, calls, pendingNotes, pendingUploads, allAssignmentsRaw, openPoolRaw] = await Promise.all([
     getSalesSnapshotForRole(actor),
     prisma.salesMobileDevice.findMany({ where: { agentId: agent.id, isActive: true }, orderBy: { lastSeenAt: "desc" } }),
     prisma.salesMobileCall.findMany({ where: { agentId: agent.id }, include: { assignment: true }, orderBy: { startedAt: "desc" }, take: 50 }),
     prisma.salesMobileCall.count({ where: { agentId: agent.id, noteRequired: true, noteSubmitted: false } }),
     prisma.salesMobileCall.count({ where: { agentId: agent.id, recordingStatus: { in: ["LOCAL_PENDING", "UPLOADING", "FAILED"] } } }),
+    prisma.salesLeadAssignment.findMany({ orderBy: { createdAt: "desc" }, take: 200 }),
+    prisma.salesLeadPoolItem.findMany({ where: { status: "OPEN" }, orderBy: { createdAt: "desc" }, take: 100 }),
   ]);
-  return { agent: snapshot.currentAgent, dashboard: snapshot.reports, leads: snapshot.visibleLeads, settings: snapshot.settings, devices, calls, pendingNotes, pendingUploads };
+
+  const allCompanyLeads = allAssignmentsRaw.map((item) => ({
+    id: item.id,
+    customerName: item.customerName,
+    customerPhone: item.customerPhone ?? "",
+    customerEmail: item.customerEmail ?? "",
+    stage: item.stage,
+    source: item.source,
+    serviceInterest: item.serviceInterest ?? "",
+    segment: item.segment ?? "",
+    priority: item.priority,
+    notes: item.notes ?? "",
+    followUpAt: item.followUpAt ? item.followUpAt.toISOString() : null,
+    assignedAgentId: item.assignedAgentId,
+    createdAt: item.createdAt.toISOString(),
+  }));
+
+  const availableLeads = openPoolRaw.map((item) => ({
+    id: item.id,
+    customerName: item.customerName,
+    customerPhone: item.customerPhone ?? "",
+    customerEmail: item.customerEmail ?? "",
+    source: item.source,
+    serviceInterest: item.serviceInterest ?? "",
+    segment: item.segment ?? "",
+    priority: item.priority,
+    notes: item.notes ?? "",
+    createdAt: item.createdAt.toISOString(),
+  }));
+
+  return {
+    agent: snapshot.currentAgent,
+    dashboard: snapshot.reports,
+    leads: snapshot.visibleLeads,
+    allLeads: allCompanyLeads,
+    availableLeads,
+    availableLeadCount: openPoolRaw.length,
+    roundRobinOptional: true,
+    settings: snapshot.settings,
+    devices,
+    calls,
+    pendingNotes,
+    pendingUploads,
+  };
 }
 
 export async function requestSalesMobileLeadPack(actor: SalesMobileActor, sizeInput: unknown) {
@@ -228,8 +273,39 @@ export async function submitSalesMobileDisposition(actor: SalesMobileActor, inpu
 
 export async function saveSalesMobileRecording(actor: SalesMobileActor, callId: string, file: File, recordingDurationMs = 0) {
   const agent = await getSalesMobileAgent(actor);
-  const call = await prisma.salesMobileCall.findFirst({ where: { id: callId, agentId: agent.id } });
-  if (!call) throw new Error("Call session not found.");
+  let call = await prisma.salesMobileCall.findFirst({ where: { id: callId, agentId: agent.id } });
+  if (!call) {
+    // If not a direct call session, check if it's a direct lead assignment voice note
+    const assignment = await prisma.salesLeadAssignment.findUnique({ where: { id: callId } });
+    if (assignment) {
+      call = await prisma.salesMobileCall.create({
+        data: {
+          assignmentId: assignment.id,
+          agentId: agent.id,
+          phoneNumber: assignment.customerPhone ?? "Voice Note",
+          direction: "OUTBOUND",
+          status: "COMPLETED",
+          outcome: "VOICE_NOTE",
+          note: "Recorded voice note / objection memo",
+          durationSeconds: recordingDurationMs > 0 ? Math.round(recordingDurationMs / 1000) : 0,
+          recordingStatus: "NONE",
+          noteRequired: false,
+          noteSubmitted: true,
+        },
+      });
+      await prisma.salesActivityLog.create({
+        data: {
+          assignmentId: assignment.id,
+          actorUserId: actor.userId,
+          action: "VOICE_NOTE_RECORDED",
+          note: "Lead voice recording uploaded from closer mobile.",
+          metadata: { callId: call.id, recordingDurationMs },
+        },
+      });
+    } else {
+      throw new Error("Call session or lead assignment not found.");
+    }
+  }
   if (!file.size || file.size > MAX_RECORDING_BYTES) throw new Error("Recording must be between 1 byte and 50 MB.");
   const allowed = new Set(["audio/m4a", "audio/mp4", "audio/aac", "audio/mpeg", "audio/wav", "audio/x-wav", "audio/3gpp", "application/octet-stream"]);
   if (!allowed.has(file.type || "application/octet-stream")) throw new Error("Unsupported recording format.");
