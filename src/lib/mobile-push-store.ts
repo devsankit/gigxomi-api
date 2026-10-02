@@ -5,6 +5,7 @@ import { applicationDefault, cert, getApps, initializeApp } from "firebase-admin
 import { getMessaging, type Message } from "firebase-admin/messaging";
 import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 
 import { prisma } from "@/lib/prisma";
@@ -524,29 +525,72 @@ function getFirebaseMessagingService() {
     return getMessaging(existing);
   }
 
+  // 1. Direct Service Account File (Most robust & immediate)
+  const candidatePaths = [
+    process.env.FIREBASE_SERVICE_ACCOUNT_FILE?.trim(),
+    process.env.GOOGLE_APPLICATION_CREDENTIALS?.trim(),
+    path.join(process.cwd(), "firebase-service-account.json"),
+    "/var/www/gigxomi-api/firebase-service-account.json",
+    "/var/www/gigxomi-app/firebase-service-account.json",
+  ].filter(Boolean) as string[];
+
+  for (const credPath of candidatePaths) {
+    try {
+      if (existsSync(credPath)) {
+        const raw = readFileSync(credPath, "utf8");
+        const sa = JSON.parse(raw) as {
+          client_email?: string;
+          private_key?: string;
+          project_id?: string;
+        };
+        if (sa.client_email && sa.private_key) {
+          return getMessaging(
+            initializeApp(
+              {
+                credential: cert({
+                  clientEmail: sa.client_email,
+                  privateKey: normalizeFirebasePrivateKey(sa.private_key),
+                  projectId: sa.project_id || projectId,
+                }),
+                projectId: sa.project_id || projectId,
+              },
+              FIREBASE_APP_NAME,
+            ),
+          );
+        }
+      }
+    } catch {
+      // Continue to next candidate
+    }
+  }
+
   const serviceAccountJson = process.env.FIREBASE_SERVICE_ACCOUNT_JSON?.trim();
   const clientEmail = process.env.FIREBASE_CLIENT_EMAIL?.trim();
   const privateKey = normalizeFirebasePrivateKey(process.env.FIREBASE_PRIVATE_KEY);
 
   if (serviceAccountJson) {
-    const serviceAccount = JSON.parse(serviceAccountJson) as {
-      client_email?: string;
-      private_key?: string;
-      project_id?: string;
-    };
-    return getMessaging(
-      initializeApp(
-        {
-          credential: cert({
-            clientEmail: serviceAccount.client_email,
-            privateKey: normalizeFirebasePrivateKey(serviceAccount.private_key),
+    try {
+      const serviceAccount = JSON.parse(serviceAccountJson) as {
+        client_email?: string;
+        private_key?: string;
+        project_id?: string;
+      };
+      return getMessaging(
+        initializeApp(
+          {
+            credential: cert({
+              clientEmail: serviceAccount.client_email,
+              privateKey: normalizeFirebasePrivateKey(serviceAccount.private_key),
+              projectId: serviceAccount.project_id || projectId,
+            }),
             projectId: serviceAccount.project_id || projectId,
-          }),
-          projectId,
-        },
-        FIREBASE_APP_NAME,
-      ),
-    );
+          },
+          FIREBASE_APP_NAME,
+        ),
+      );
+    } catch {
+      // Ignore
+    }
   }
 
   if (clientEmail && privateKey) {
@@ -566,15 +610,19 @@ function getFirebaseMessagingService() {
     if (credentialPath && !process.env.GOOGLE_APPLICATION_CREDENTIALS) {
       process.env.GOOGLE_APPLICATION_CREDENTIALS = credentialPath;
     }
-    return getMessaging(
-      initializeApp(
-        {
-          credential: applicationDefault(),
-          projectId,
-        },
-        FIREBASE_APP_NAME,
-      ),
-    );
+    try {
+      return getMessaging(
+        initializeApp(
+          {
+            credential: applicationDefault(),
+            projectId,
+          },
+          FIREBASE_APP_NAME,
+        ),
+      );
+    } catch {
+      // Ignore
+    }
   }
 
   return null;
@@ -601,9 +649,26 @@ function stringData(data: Record<string, string | undefined>) {
 }
 
 export function isFirebasePushConfigured() {
+  const candidatePaths = [
+    process.env.FIREBASE_SERVICE_ACCOUNT_FILE?.trim(),
+    process.env.GOOGLE_APPLICATION_CREDENTIALS?.trim(),
+    path.join(process.cwd(), "firebase-service-account.json"),
+    "/var/www/gigxomi-api/firebase-service-account.json",
+    "/var/www/gigxomi-app/firebase-service-account.json",
+  ].filter(Boolean) as string[];
+
+  const fileExists = candidatePaths.some((p) => {
+    try {
+      return existsSync(p);
+    } catch {
+      return false;
+    }
+  });
+
   return Boolean(
     getFirebaseProjectId() &&
-      (process.env.FIREBASE_SERVICE_ACCOUNT_JSON ||
+      (fileExists ||
+        process.env.FIREBASE_SERVICE_ACCOUNT_JSON ||
         (process.env.FIREBASE_CLIENT_EMAIL && process.env.FIREBASE_PRIVATE_KEY) ||
         process.env.FIREBASE_SERVICE_ACCOUNT_FILE ||
         process.env.GOOGLE_APPLICATION_CREDENTIALS),
