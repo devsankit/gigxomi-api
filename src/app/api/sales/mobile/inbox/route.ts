@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { requireSessionRole } from "@/lib/api/require-session-role";
+import { getConversationById } from "@/lib/gigxomi/dummy-platform-store";
 import { syncSalesAgentConversationLinks } from "@/lib/gigxomi/sales-store";
 import { prisma } from "@/lib/prisma";
 
@@ -19,6 +20,7 @@ export async function GET(request: Request) {
   if (!authorization.ok) return authorization.response;
   const url = new URL(request.url);
   const cursor = url.searchParams.get("cursor")?.trim() || "";
+  const scope = url.searchParams.get("scope")?.trim() || "all";
   const agent = authorization.session.role === "SALES_AGENT"
     ? await prisma.salesAgentProfile.findUnique({ where: { userId: authorization.session.userId }, select: { id: true } })
     : null;
@@ -26,11 +28,11 @@ export async function GET(request: Request) {
   if (agent) await syncSalesAgentConversationLinks(agent.id);
   const leads = await prisma.salesLeadAssignment.findMany({
     where: {
-      ...(agent ? { assignedAgentId: agent.id } : {}),
+      ...(agent && scope === "mine" ? { assignedAgentId: agent.id } : {}),
       conversationId: { not: null },
       ...(cursor ? { id: { gt: cursor } } : {}),
     },
-    orderBy: { id: "asc" },
+    orderBy: { updatedAt: "desc" },
     take: 31,
   });
   const page = leads.slice(0, 30);
@@ -38,31 +40,40 @@ export async function GET(request: Request) {
   const byId = new Map(conversations.map((item) => [item.id, item]));
   return NextResponse.json({
     ok: true,
-    conversations: page.map((lead) => ({
-      lead: {
-        id: lead.id,
-        customerName: lead.customerName,
-        customerPhone: lead.customerPhone,
-        customerEmail: lead.customerEmail,
-        stage: lead.stage,
-        priority: lead.priority,
-        serviceInterest: lead.serviceInterest,
-        updatedAt: lead.updatedAt,
-      },
-      conversation: lead.conversationId
-        ? (() => {
-            const conversation = byId.get(lead.conversationId);
-            return conversation
-              ? {
-                  id: conversation.id,
-                  latestMessage: getLatestMessagePreview(conversation.payload),
-                  status: conversation.status,
-                  updatedAt: conversation.updatedAt,
-                }
-              : null;
-          })()
-        : null,
-    })),
+    conversations: page.map((lead) => {
+      const conv = lead.conversationId ? byId.get(lead.conversationId) : null;
+      let latestMessage = conv ? getLatestMessagePreview(conv.payload) : null;
+      if (!latestMessage && lead.conversationId) {
+        const fileConv = getConversationById(lead.conversationId);
+        if (fileConv?.messages?.length) {
+          const sorted = [...fileConv.messages].sort((left, right) => new Date(String(right.createdAt ?? "")).getTime() - new Date(String(left.createdAt ?? "")).getTime());
+          if (sorted[0]) {
+            latestMessage = { body: sorted[0].body ?? "", createdAt: sorted[0].createdAt ?? null };
+          }
+        }
+      }
+      return {
+        lead: {
+          id: lead.id,
+          customerName: lead.customerName,
+          customerPhone: lead.customerPhone,
+          customerEmail: lead.customerEmail,
+          stage: lead.stage,
+          priority: lead.priority,
+          serviceInterest: lead.serviceInterest,
+          updatedAt: lead.updatedAt,
+        },
+        conversation: lead.conversationId
+          ? {
+              id: lead.conversationId,
+              channel: "whatsapp",
+              latestMessage,
+              status: conv?.status ?? "OPEN",
+              updatedAt: conv?.updatedAt ?? lead.updatedAt,
+            }
+          : null,
+      };
+    }),
     nextCursor: leads.length > 30 ? page[page.length - 1]?.id ?? null : null,
   });
 }
