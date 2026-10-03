@@ -16,6 +16,7 @@ import {
   markWhatsAppWebhookMessagesProcessed,
   routeAndRecordWhatsAppWebhook,
 } from "@/lib/gigxomi/whatsapp-webhook-routing";
+import { syncTouchedWhatsAppConversations } from "@/lib/gigxomi/whatsapp-sales-lead-sync";
 
 function verifyTokenMatchesGlobalEnv(token: string | null) {
   const expected = process.env.WHATSAPP_VERIFY_TOKEN?.trim() || "";
@@ -155,6 +156,11 @@ export async function POST(request: Request) {
   const result = await ingestWhatsAppWebhookPayloadFromFile(payload);
   const authProcessed = await processPublicAuthWebhookPayload(payload);
   const pushTargets = result.processedMessages > 0 ? result.conversationsTouched : [];
+  if (result.conversationsTouched && result.conversationsTouched.length > 0) {
+    void syncTouchedWhatsAppConversations(result.conversationsTouched).catch((err) =>
+      console.warn("[webhook] Live CRM sync warning:", err),
+    );
+  }
   const mobilePushPromise = Promise.allSettled(
     pushTargets.map((conversationId) =>
       sendMobileChatPushForConversation({
