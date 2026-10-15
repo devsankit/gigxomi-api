@@ -54,12 +54,14 @@ export async function syncTouchedWhatsAppConversations(conversationIds: string[]
       });
 
       if (existing) {
+        const mergedTags = Array.from(new Set([...(existing.tags || []), "digital_franchise_lead", "source_ai_bot"]));
         await prisma.salesLeadAssignment.update({
           where: { id: existing.id },
           data: {
             conversationId: conv.id,
             customerName: conv.customerName || existing.customerName,
             customerPhone: conv.customerPhone || existing.customerPhone,
+            tags: mergedTags,
             lastContactedAt: conv.updatedAt,
             updatedAt: conv.updatedAt,
           },
@@ -69,17 +71,17 @@ export async function syncTouchedWhatsAppConversations(conversationIds: string[]
           data: {
             id: `sales-conversation-${conv.id}`,
             assignedAgentId: fallbackAgentId,
-            customerName: conv.customerName || "WhatsApp Customer",
+            customerName: conv.customerName || "Franchise Lead",
             customerPhone: conv.customerPhone || null,
-            source: "whatsapp",
-            serviceInterest: "WhatsApp sales enquiry",
-            segment: "whatsapp_sales",
-            priority: "normal",
-            tags: [],
+            source: "FRANCHISE_AI_BOT",
+            serviceInterest: "Gigxomi Digital Franchise Territory",
+            segment: "franchise_partner",
+            priority: "hot",
+            tags: ["digital_franchise_lead", "territory_checked", "source_ai_bot"],
             conversationId: conv.id,
             budgetAmount: 0,
             stage: "NEW",
-            notes: "Inbound WhatsApp conversation automatically synced to Closer CRM.",
+            notes: "Inbound WhatsApp franchise conversation automatically synced to Closer CRM.",
             lastContactedAt: conv.updatedAt,
             createdAt: conv.updatedAt,
             updatedAt: conv.updatedAt,

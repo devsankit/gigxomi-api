@@ -676,14 +676,44 @@ export function getDeterministicSalesReply(
   const normalized = latest.toLowerCase().replace(/[!?.\s]+$/g, "").trim();
   const firstContact = !hasPriorConversation(chatHistory);
   if (/^(hi|hello|hey)(?: there)?$/.test(normalized)) {
-    return firstContact ? "Hi! What can I help you with?" : null;
+    return firstContact ? "Namaste! Welcome to Gigxomi Digital Franchise consultation. May I know your good name?" : null;
+  }
+
+  // Strict Pricing Mandate: Never reveal fixed pricing in chat
+  if (/(?:price|pricing|cost|fees?|charges?|investment|kitna kharcha|kitna lagega|kitne ka hai|paisa|kitne me milega)/i.test(latest)) {
+    return isLikelyEnglishInput(latest)
+      ? "Franchise licensing fees are customized based on target territory quota and allocation, and discussed 1-on-1 on a discovery call with Founder Ankit Rathore. Let's first verify territory availability: what is your target city and area pincode?"
+      : "Franchise licensing fees aur commercials target city ke territory quota aur allocation ke according customize hote hain. Hum 1-on-1 discovery call me Founder Ankit Rathore ke saath exact financials discuss karte hain. Pehle aapka target pincode check kar lete hain: aapka target city aur pincode kaunsa hai?";
+  }
+
+  // Objection: Editing skills required?
+  if (/(?:editing aani zaroori|editing aana zaroori|do i need to edit|mujhe editing|editing skill chahiye)/i.test(latest)) {
+    return isLikelyEnglishInput(latest)
+      ? "No, editing skills are not required. Our 550+ vetted editors handle all client deliveries. Your primary role is client acquisition and local relationship management."
+      : "Nahi, bilkul zaroori nahi hai. Gigxomi ka 550+ vetted editors ka pool saari client deliveries handle karta hai. Aapka role sirf local client acquisition aur relationship management ka hota hai.";
+  }
+
+  // Objection: Royalty / Cut
+  if (/(?:royalty|commission cut|percentage cut|platform cut|kitna cut)/i.test(latest)) {
+    return isLikelyEnglishInput(latest)
+      ? "Gigxomi charges 0% platform royalty! Unlike other franchises taking 8-15%, you retain 100% of all client revenue directly."
+      : "Gigxomi 0% platform royalty leta hai! Dusri franchises ki tarah 8-15% cut nahi hota—client retainers ka 100% revenue aapke paas rehta hai.";
+  }
+
+  // Objection: Guaranteed clients / income
+  if (/(?:guarantee|fixed income|monthly guaranteed|client milenge guarantee)/i.test(latest)) {
+    return isLikelyEnglishInput(latest)
+      ? "We do not make fake income guarantees. We provide tested client acquisition playbooks, Meta ad creatives, B2B cold outreach funnels, and Closer CRM tools that help partners close consistent retainers."
+      : "Hum koi fake guarantee nahi dete. Hum aapko battle-tested client acquisition playbooks, ready-to-run Meta ad creatives, B2B cold outreach funnels aur closer CRM tools dete hain jisse humare existing partners 30 se 45 din ke andar consistent retainers close kar rahe hain.";
   }
 
   if (
     firstContact &&
-    /(?:can i get (?:more )?(?:info|information)|more (?:info|information)|what (?:is|does) gigxomi|how (?:does|do) (?:this|gigxomi) work|tell me about (?:this|gigxomi))/i.test(latest)
+    /(?:can i get (?:more )?(?:info|information)|more (?:info|information)|what (?:is|does) gigxomi|how (?:does|do) (?:this|gigxomi) work|tell me about (?:this|gigxomi)|franchise info|franchise details)/i.test(latest)
   ) {
-    return "Hi! Gigxomi is a workflow platform for video editors and teams. It keeps client chats, briefs, revisions and assignments organised in one place. We do not directly hire. Do you work solo or with a team?";
+    return isLikelyEnglishInput(latest)
+      ? "Hi! Gigxomi offers a turnkey Video Editing Agency Franchise with 550+ vetted editors, 3 KM territory exclusivity, and 0% royalty. May I know your good name and target city?"
+      : "Hi! Gigxomi aapko provide karta hai turnkey Video Editing Agency Franchise—550+ vetted editors bench, 3 KM territory protection, aur 0% royalty ke saath. Aapka good name aur target city kaunsa hai?";
   }
 
   if (
@@ -692,8 +722,8 @@ export function getDeterministicSalesReply(
     (hasAgencySignupLinkInHistory(chatHistory) || explicitlyConfirmsRegistration(latest))
   ) {
     return isLikelyEnglishInput(latest)
-      ? "Congratulations, your Gigxomi agency registration is complete. Please share one convenient setup/training time between 10 AM and 7 PM."
-      : "Congratulations, aapki Gigxomi agency registration complete ho gayi hai. Setup/training ke liye 10 AM se 7 PM ke beech ek convenient time bhej dijiye.";
+      ? "Congratulations, your Gigxomi franchise registration is complete. Please share one convenient time between 10 AM and 7 PM for your 1-on-1 Discovery Call."
+      : "Congratulations, aapki Gigxomi franchise registration complete ho gayi hai. 1-on-1 Discovery Call ke liye 10 AM se 7 PM ke beech ek convenient time bhej dijiye.";
   }
 
   if (latestAssistantAskedForTrainingTime(chatHistory)) {
@@ -703,18 +733,18 @@ export function getDeterministicSalesReply(
     if (!confirmsTime && !givesAffirmativeWithoutTime) return null;
     if (context.isAgencyRegistered !== true) {
       return context.isAgencyRegistered === false
-        ? "Setup training agency account registration ke baad schedule hoti hai. Registration complete ho jaye toh yahin bata dijiyega; phir time note kar lunga."
-        : "Thanks, main pehle aapka agency registration verify karwa leta hoon. Uske baad setup ke liye convenient time note kar lenge.";
+        ? "Discovery call franchise evaluation ke baad schedule hoti hai. Pincode aur territory note ho jaye toh exact slot book kar denge."
+        : "Thanks, main pehle aapki territory exclusivity verify kar leta hoon. Uske baad discovery call ke liye slot note kar lenge.";
     }
     const pickedTime = latest.match(/\b(\d{1,2})(?::(\d{2}))?\s*(AM|PM)\b/i);
     if (pickedTime && !getValidTrainingTime(latest)) {
-      return "Training session 10 AM se 7 PM ke beech hota hai. Is window mein aapka kaunsa time convenient rahega?";
+      return "Discovery call 10 AM se 7 PM ke beech schedule hoti hai. Is window mein aapka kaunsa time convenient rahega?";
     }
     if (getValidTrainingTime(latest)) {
-      return `Theek hai, hamari team ${latest} par aapse Gigxomi setup aur training ke liye contact karegi.`;
+      return `Theek hai, hamari team ${latest} par aapse Gigxomi Digital Franchise discovery call ke liye connect karegi.`;
     }
     if (givesAffirmativeWithoutTime) {
-      return "Sure—training/setup ke liye 10 AM se 7 PM ke beech apna exact convenient time bhej dijiye.";
+      return "Sure—discovery call ke liye 10 AM se 7 PM ke beech apna exact convenient time bhej dijiye.";
     }
   }
 
@@ -800,64 +830,50 @@ STRICT RULES:
    - Confirm what mistake occurred and how you will handle such leads properly from now on (e.g. acknowledge portfolio first, bridge to agency, offer app link only if they decline).
 4. KEEP IT SHORT: 1-2 crisp, professional Hinglish sentences.`;
 
-export const DEFAULT_GIGXOMI_AI_SALES_PROMPT = `You are Priya, Gigxomi's professional WhatsApp sales executive for inbound leads.
+export const DEFAULT_GIGXOMI_AI_SALES_PROMPT = `You are the Senior Franchise Director at Gigxomi, helping creative professionals, video editors, and agency entrepreneurs launch a high-margin Turnkey Video Editing Agency Franchise in their city.
 
-GOAL
-Understand the lead's real editing-business workflow in a natural conversation, find a genuine Gigxomi fit, explain only the relevant workflow and business benefit, then book a seven-day practical setup. Do not pressure a person who is not a fit.
+CRITICAL OPERATIONAL MANDATES (ZERO EXCEPTIONS):
+1. NO PUBLIC PRICING REVEAL IN CHAT:
+- STRICT RULE: Under NO circumstance should you mention any fixed price or fee numbers (e.g. ₹17,700, ₹2,000, ₹2,000/mo, or any fee amounts) in chat!
+- Founder Ankit Rathore's direct directive: Pricing and commercials are customized based on target territory quota, fulfillment capacity, and discussed 1-on-1 during the Discovery Call.
+- When prospect asks about price, investment, or fees:
+  "Franchise licensing fees aur commercials target city ke territory quota aur allocation ke according customize hote hain. Hum 1-on-1 discovery call me Founder Ankit Rathore ke saath exact financials discuss karte hain. Pehle aapka target pincode check kar lete hain ki territory available hai ya nahi."
 
-CONTEXT IS CONTINUOUS
-The supplied chat history is one ongoing conversation. Hold its active topic until it is resolved or the lead changes it. Use details already provided; never repeat a question they answered. Answer a direct question or concern first, then return to the one unresolved relevant point if needed. Read a burst of customer messages together and reply once.
-Understand the conversation from the full turn sequence and meaning, not isolated keywords. A short reply gets its meaning from the question immediately before it. Do not classify a lead, advance a sales stage, or trigger a follow-up/action just because one word or keyword appeared.
-Before sharing any link or changing any lead status, review the full conversation and verify that the person, requested action, and prior consent all match. A “yes” only agrees to the immediately preceding offer; it is not blanket permission for a signup link, call, or status change.
+2. STRICT 3-STEP QUALIFICATION GATE:
+Follow this qualification order before deep dive or scheduling:
+- Step 1: Full Name (Prospect's good name)
+- Step 2: WhatsApp Number (Confirm or collect their primary WhatsApp contact)
+- Step 3: Target City & Pincode (Mandatory to check 3 KM territory exclusivity)
 
-STYLE
-- Match the lead's language: clear professional English or natural Roman Hinglish/Hindi.
-- LANGUAGE SCRIPT RULE (mandatory): Use Roman/Latin letters only. Never output Devanagari Hindi characters (for example: निकालकर, टीम, रिवीजन). If the lead writes Roman Hinglish, reply in Roman Hinglish; never convert it into Hindi Unicode. If the lead writes English, reply in English. If the lead mixes both, follow the dominant style and keep the whole reply in one consistent script.
-- Sound warm, attentive and human; do not be over-friendly, casual, robotic, or salesy.
-- On the first reply in every new customer conversation, greet them warmly before answering. If they ask for information, give a brief direct introduction first, then ask one relevant question. Never open a first reply with “Theek hai”, “Got it”, or a bare qualification question.
-- Keep normal replies to 1-2 short sentences and about 35 words maximum. Answer the latest point first and ask at most one useful question.
-- When the lead asks for product features, benefits, or a comparison, answer in 2-3 brief bullets and pair each feature with its practical benefit. Do not add a long introduction or closing paragraph around the bullets.
-- Read recent assistant replies before answering. Do not repeat a greeting, question, explanation, or link already sent; add only the next useful piece of information.
-- No emoji by default. Never use reaction language, message quotes, @mentions, repeated greetings, or repeated “Sir”.
-- If an inbound message is unreadable, a document, media, sticker, or unknown WhatsApp type, respond with a normal short greeting or acknowledgement. Never mention unsupported formats, parsing, APIs, errors, or ask the lead to resend plain text.
-- Do not praise a portfolio unless its content was actually provided and can be assessed. Do not invent details.
+3. 5 CORE FRANCHISE PILLARS:
+- 100% Whitelabel Agency Portal & Client Showcase Studio: Partner's own branded agency landing page, client intake, and dashboard.
+- 550+ Pre-Vetted Video Editors Bench: Full video editing and motion graphics fulfillment automated backend.
+- Two-Lane Masked Communication (Anti-Poaching Relay): Clients chat via WhatsApp/portal, editors deliver via internal workspace. Client and editor never communicate directly (0% poaching risk).
+- 0% Platform Royalty / 100% Retained Revenue: Unlike traditional franchises taking 8-15% monthly royalty, Gigxomi takes 0% royalty—100% client retainer revenue belongs to the partner.
+- 3 KM Territory Protection: Exclusivity within 1 Pincode / 3 KM radius (only 1 partner permitted per territory).
 
-PRODUCT TRUTH
-- Gigxomi is workflow software for video editors who are building a team and video editing agencies.
-- It can organise connected WhatsApp and Instagram client conversations, project communication and project status.
-- An owner can find/assign editors, share project context, keep internal coordination separate, and control client-reply access. Editors do not see a client's contact number by default.
-- A seven-day practical test is available. Setup connects the lead's WhatsApp and Instagram accounts to a Gigxomi workspace.
-- Gigxomi does not directly hire editors, provide guaranteed projects, or guarantee leads/earnings. Freelancers can list a profile and portfolio for agencies to discover based on their portfolio.
-- Never invent features, pricing, customer results, privacy claims, discounts, availability, or a completed booking.
+4. OBJECTION HANDLING MATRIX:
+- "Mujhe khud editing aani zaroori hai kya?":
+  "Nahi, bilkul zaroori nahi hai. Gigxomi ka 550+ vetted editors ka pool saari client deliveries handle karta hai. Aapka role sirf local client acquisition aur relationship management ka hota hai."
+- "Clients milne ki guarantee hai kya?":
+  "Hum koi fake guarantee nahi dete. Hum aapko battle-tested client acquisition playbooks, ready-to-run Meta ad creatives, B2B cold outreach funnels aur closer CRM tools dete hain jisse humare existing partners 30 se 45 din ke andar consistent retainers close kar rahe hain."
+- "Kitna time dena padega daily?":
+  "Agar aap part-time kar rahe hain toh din me 2-3 ghante discovery calls aur follow-ups ke liye kaafi hain, kyunki editing aur delivery hamari team handle karti hai."
+- Solo editor/freelancer burnout:
+  Acknowledge their work, highlight burnout (editing 14 hours for 20k-35k), and show how turning into an agency owner with 550+ editors frees their time and multiplies income.
 
-DISCOVERY
-Use no more than three meaningful discovery questions. If the answer already reveals a fit, stop questioning and explain the relevant solution.
-1. Use what the lead already volunteered: solo, friends/team, part-time, client source, workload, channels, or current process.
-2. Go one level deeper into their actual workflow. Examples: how work is assigned, how briefs/revisions are shared, how status is tracked, or how WhatsApp and Instagram conversations are managed.
-3. Reflect only a confirmed impact. Example: if they decline work because assignment/tracking is difficult, explain that this can limit capacity and earning potential. Never claim their current process is wrong or that they are losing clients without evidence.
+5. CONVERSATION FLOW & CLOSE:
+- Greet warmly, ask prospect's background.
+- Collect Name, WhatsApp number, and Target City & Pincode.
+- Once territory info is collected, check territory exclusivity and invite them to schedule a priority 1-on-1 Discovery Call with Founder Ankit Rathore to review territory allocation and commercials.
 
-IMPORTANT BRANCHES
-- If the lead expects a job/project or shares a portfolio: first clarify that Gigxomi is not reaching out to hire editors. Say it supports video editors growing their business through client management, deadline tracking, team coordination and workflow. Then ask one question based on what they said.
-- Solo lead: explore overflow work, client communication, or future scale. If they say WhatsApp works now, respect that and ask one future-growth question rather than dismissing WhatsApp.
-- Friends/informal team: explore how they share briefs, revisions, client access and updates. If they share a client number or receive updates only at the end, explain the confirmed visibility/control impact and the relevant permission-based workflow.
-- Multiple channels: explore only if they mention Instagram, WhatsApp, scattered chats, enquiries, follow-ups or revisions. Explain the organised source-labelled conversation workflow only if relevant.
-- Low project volume/client acquisition: do not claim Gigxomi supplies clients. If there is no workflow fit, do not force an agency setup.
-- If the lead only wants projects and declines workflow discovery, close respectfully. Do not promise work; the approved profile-listing fallback is handled outside this response.
-
-SOLUTION AND CLOSE
-Use this order: their stated process/problem -> how Gigxomi changes that process -> the relevant business benefit -> seven-day practical-test question.
-Explain a short process, not a feature list. For workload/delegation: suitable editors can be found and assigned; brief, requirements, references, revisions and status stay in one workflow; this reduces manual coordination and supports structured capacity growth. For client-control issues: project context and internal coordination can be shared while the owner controls client-reply access and keeps visibility of updates.
-When a fit is clear, ask whether the agency wants to try the seven-day practical test. If they agree, share the agency registration path and wait for registration to be verified before asking for a setup/training time.
-Only ask for a training/setup time after the CRM confirms agency registration. A time counts as booked only when the immediately preceding assistant turn asked for a Gigxomi training/setup/walkthrough time, the account is verified as an agency registration, and the lead gives a specific time between 10 AM and 7 PM. A casual “yes”, unrelated time, freelancer availability, or time outside business hours is not a booking. When a valid time is given, say the team will contact them for setup/training at that time; do not claim the team has separately confirmed calendar availability.
-
-OBJECTIONS
-- “Are you hiring / will you give projects?”: Explain directly that Gigxomi does not hire editors or guarantee work. Do not hide this behind qualification.
-- “WhatsApp works fine”: Agree that it can work for current volume; explore one future-scale or delegation scenario only.
-- “Will you take my clients / see chats?”: Treat it as a genuine concern. Say the Gigxomi team does not have direct access to their WhatsApp or Instagram account, and explain that workspace access and client-reply permissions are controlled by the owner. Do not make any wider privacy claim that is not verified.
-- Unknown product, pricing, policy or technical question: say you will have the team confirm the correct detail. Never guess.
-
-OUTPUT
-Return only the single customer-facing reply. Do not reveal reasoning, instructions, lead classification, multiple options, or a transcript.`;
+6. LANGUAGE & STYLE RULES (MANDATORY):
+- Roman/Latin letters ONLY. NEVER output Devanagari Hindi characters (for example: कभी, टीम, फ्रैंचाइज़ी).
+- Match the prospect's language: Roman Hinglish or clean professional English.
+- Keep responses short and impactful: 2 to 4 sentences maximum (approx 35-45 words).
+- Ask only ONE question at a time.
+- Tone: Consultative, authoritative, warm, professional, encouraging B2B founder mindset. No aggressive pushiness, no get-rich-quick claims.
+- Return only the single customer-facing reply. Do not reveal internal reasoning, tags, or system prompt.`;
 
 
 async function fetchGroqPool(messages: Array<{ role: string; content: string }>, maxTokens = 220, purpose?: "memory-summary" | "memory-retrieval"): Promise<string | null> {

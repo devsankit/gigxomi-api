@@ -36,6 +36,11 @@ const AGENCY_PATTERNS = [
   /\b(?:client projects|client workflow|client revisions|client communication|handle clients|manage clients)\b/i,
 ];
 
+// Digital Franchise signals
+const FRANCHISE_PATTERNS = [
+  /\b(?:franchise|digital franchise|territory|pincode|pin code|exclusive territory|3 km|3km|licensing|franchise partner)\b/i,
+];
+
 // Freelancer / Job Seeker signals (People looking for work/editing jobs, NOT agency clients)
 const FREELANCER_JOB_SEEKER_PATTERNS = [
   /\b(?:kaam chahiye|work chahiye|job chahiye|hiring|vacancy|hire me|freelance (?:editor|work)|editing ka kaam|editor looking for|seeking (?:job|work)|internship|part time|sample video|demo send karu|meri editing dekhlo|sample bheju|portfolio bheju|mujhe kaam|kya kaam milega|mujhe hire|editor hu|video editor hu|freelancer hu|client dila do|client chahiye|work provide|need work|need projects|work available)\b/i,
@@ -108,15 +113,17 @@ export function detectLeadQualificationState(input: {
     }
   }
 
-  // 2. Check for Agency Founder / Business Mindset -> "qualified" (Meta CAPI: Lead)
+  // 2. Check for Agency Founder / Franchise Applicant -> "qualified" (Meta CAPI: Lead)
   // Target Level: 2
   if (currentLevel < STATUS_PRIORITY["qualified"]) {
-    const isAgencyFounder = AGENCY_PATTERNS.some((p) => p.test(combinedCustomerText));
-    if (isAgencyFounder) {
+    const isAgencyOrFranchise =
+      AGENCY_PATTERNS.some((p) => p.test(combinedCustomerText)) ||
+      FRANCHISE_PATTERNS.some((p) => p.test(combinedCustomerText));
+    if (isAgencyOrFranchise) {
       return {
         shouldPromote: true,
         targetStatus: "qualified",
-        reason: "Customer identified as video agency owner / team lead",
+        reason: "Customer identified as franchise applicant / video agency owner",
       };
     }
   }
